@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "file-taxes-paraguay"
+version = "1.0.0"
+description = "Automated tax filing system for Paraguay tax residents"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+keywords = ["taxes", "paraguay", "automation", "marangatu"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pycryptodome = "^3.19.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
