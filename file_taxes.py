@@ -231,6 +231,7 @@ def main() -> int:
         """Send notification with message prefix."""
         full_message = f'{config.message_prefix}{message}'
         notifier.send(title, full_message)
+        print(f'{title} - {message}')
 
     # Initialize HTTP client
     http = HTTPClient(
@@ -258,6 +259,7 @@ def main() -> int:
     import urllib.parse
     token_encoded = urllib.parse.quote(token)
 
+    print('Fetching profile information...')
     http.random_sleep()
     profile_response = http.get(f'{URL_BASE}/{METHOD_PROFILE}?t3={token_encoded}')
 
@@ -282,7 +284,6 @@ def main() -> int:
 
     # Check profile info changes
     print('Checking profile info changes...')
-
     http.random_sleep()
     check_profile_response = http.get(f'{URL_BASE}/{METHOD_CHECK_PROFILE}?t3={token_encoded}')
 
@@ -326,7 +327,6 @@ def main() -> int:
 
     # Check pending forms
     print('Checking pending forms...')
-
     http.random_sleep()
     pending_response = http.get(f'{URL_BASE}/{METHOD_PENDING}?t3={token_encoded}')
 
@@ -338,7 +338,6 @@ def main() -> int:
     if pending_forms:
         # Get menu items
         print('Fetching menu items...')
-
         http.random_sleep()
         menu_response = http.get(f'{URL_BASE}/{METHOD_MENU}?t3={token_encoded}')
 
