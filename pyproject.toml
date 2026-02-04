@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "file-taxes-paraguay"
+name = "parayguay-tax-automation"
 version = "1.0.0"
 description = "Automated tax filing system for Paraguay tax residents"
 authors = ["Your Name <your.email@example.com>"]
