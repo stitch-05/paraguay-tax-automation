@@ -92,7 +92,7 @@ def attempt_captcha_solve(config: Config, http: HTTPClient, url_base: str, url_h
         verbose=config.is_verbose
     )
 
-    print('Captcha required - attempting automatic solving with NopeCHA...')
+    print('Captcha required')
 
     # Get login page to extract captcha info
     login_page_url = f'{url_host}/eset/login?login_error=2&usuario={config.username}'
@@ -122,7 +122,7 @@ def attempt_captcha_solve(config: Config, http: HTTPClient, url_base: str, url_h
         )
         return None
 
-    print('Captcha solved! Retrying login...')
+    print('Retrying login...')
 
     # Retry login with captcha solution
     login_data['g-recaptcha-response'] = captcha_solution
