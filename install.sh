@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Installation script for file-taxes-paraguay
+# Installation script for paraguay-tax-automation
 # This script installs Python dependencies using Poetry or pip
 
 set -e
@@ -8,7 +8,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-echo "=== File Taxes Paraguay - Installation ==="
+echo "=== Paraguay Tax Automation - Installation ==="
 echo ""
 
 # Check Python version

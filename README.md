@@ -9,12 +9,13 @@ Automated tax filing system for Paraguay tax residents. Interacts with Paraguay'
 ## Installation
 
 ```bash
-git clone https://github.com/wilderko/file-taxes-paraguay-python.git
-cd file-taxes-paraguay-python
+git clone https://github.com/stitch-05/paraguay-tax-automation.git
+cd paraguay-tax-automation
 ./install.sh
 ```
 
 The install script will:
+
 1. Create a virtual environment (or use Poetry if available)
 2. Install dependencies
 3. Create `.env` from `.env.example`
@@ -58,6 +59,16 @@ python file_taxes.py -u USERNAME -p PASSWORD
 python file_taxes.py -v    # verbose
 python file_taxes.py -d    # debug
 ```
+
+### Run automatically via cron
+
+Add to your crontab (edit with `crontab -e`):
+
+```cron
+0 6 1 * * /path/to/paraguay-tax-automation/venv/bin/python /path/to/paraguay-tax-automation/file_taxes.py >/dev/null 2>&1
+```
+
+This will run the script on the 1st of every month at 6 AM.
 
 ## Requirements
 
