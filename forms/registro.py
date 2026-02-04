@@ -6,6 +6,7 @@ from datetime import datetime
 from typing import Any, Dict
 
 from forms.base import FormHandler
+from utils import AnimatedWaitContext
 
 
 class RegistroHandler(FormHandler):
@@ -27,9 +28,8 @@ class RegistroHandler(FormHandler):
         Returns:
             True if successful, False otherwise
         """
-        print('Retrieving taxpayer data...')
-        self.http.random_sleep()
-        taxpayer_page = self.http.get(f'{self.url_host}{link}')
+        with AnimatedWaitContext('Retrieving taxpayer data', self.config.is_verbose):
+            taxpayer_page = self.http.get(f'{self.url_host}{link}')
 
         if not self.contains_text(taxpayer_page, 'Actualización de Contribuyente'):
             self.send_message('Error', 'No profile available')
@@ -39,9 +39,8 @@ class RegistroHandler(FormHandler):
         recover_data = {'ruc': self.cedula, 'categoria': 'EDICION'}
         token_recover = self.encrypt_token(recover_data)
 
-        print('Retrieving form data...')
-        self.http.random_sleep()
-        recover_response = self.http.get(f'{self.url_base}/{self.METHOD_RECOVER}?t3={token_recover}')
+        with AnimatedWaitContext('Retrieving form data', self.config.is_verbose):
+            recover_response = self.http.get(f'{self.url_base}/{self.METHOD_RECOVER}?t3={token_recover}')
 
         try:
             recover = json.loads(recover_response)
@@ -127,9 +126,8 @@ class RegistroHandler(FormHandler):
             'captura': sub_data
         }
 
-        print('Checking step...')
-        self.http.random_sleep()
-        check_response = self.http.post_json(f'{self.url_base}/{self.METHOD_CHECK_STEP}', check_data)
+        with AnimatedWaitContext('Checking step', self.config.is_verbose):
+            check_response = self.http.post_json(f'{self.url_base}/{self.METHOD_CHECK_STEP}', check_data)
 
         if check_response.strip() != '[]':
             self.send_message('Error', check_response)
@@ -155,18 +153,16 @@ class RegistroHandler(FormHandler):
             'captura': sub_data
         }
 
-        print('Verifying data...')
-        self.http.random_sleep()
-        verify_response = self.http.post_json(f'{self.url_base}/{self.METHOD_VERIFICATION}', verify_data)
+        with AnimatedWaitContext('Verifying data', self.config.is_verbose):
+            verify_response = self.http.post_json(f'{self.url_base}/{self.METHOD_VERIFICATION}', verify_data)
 
         if verify_response.strip() != '[]':
             self.send_message('Error', verify_response)
             return False
 
         # Save data
-        print('Saving tax payer data...')
-        self.http.random_sleep()
-        save_response = self.http.post_json(f'{self.url_base}/{self.METHOD_SAVE}', verify_data)
+        with AnimatedWaitContext('Saving tax payer data', self.config.is_verbose):
+            save_response = self.http.post_json(f'{self.url_base}/{self.METHOD_SAVE}', verify_data)
 
         try:
             save_result = json.loads(save_response)
@@ -186,9 +182,9 @@ class RegistroHandler(FormHandler):
             return False
 
         # Follow redirect to document
-        print('Redirecting to document...')
         redirect_url = save_result.get('url', '')
-        redirect_page = self.http.get(f'{self.url_base}/{redirect_url}')
+        with AnimatedWaitContext('Redirecting to document', self.config.is_verbose):
+            redirect_page = self.http.get(f'{self.url_base}/{redirect_url}')
 
         if not self.contains_text(redirect_page, 'Enviar Solicitud'):
             self.send_message('Error', "Can't update percentages")
@@ -211,13 +207,12 @@ class RegistroHandler(FormHandler):
         document_id = document_string.rstrip(',')
 
         # Accept document
-        print('Confirming document...')
-        self.http.random_sleep()
         accept_data = {'id': document_id}
-        accept_response = self.http.post_json(
-            f'{self.url_base}/{self.METHOD_ACCEPT_DOCUMENT}',
-            accept_data
-        )
+        with AnimatedWaitContext('Confirming document', self.config.is_verbose):
+            accept_response = self.http.post_json(
+                f'{self.url_base}/{self.METHOD_ACCEPT_DOCUMENT}',
+                accept_data
+            )
 
         try:
             accept_result = json.loads(accept_response)
@@ -227,7 +222,8 @@ class RegistroHandler(FormHandler):
         # Follow final redirect
         final_url = accept_result.get('url', '') if 'accept_result' in dir() else ''
         if final_url:
-            self.http.get(f'{self.url_base}/{final_url}')
+            with AnimatedWaitContext('Finalizing document', self.config.is_verbose):
+                self.http.get(f'{self.url_base}/{final_url}')
 
         self.send_message('Success!', 'Tax payer info updated successfully!')
         return True

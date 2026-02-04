@@ -6,6 +6,7 @@ from datetime import datetime
 from typing import Any, Dict
 
 from forms.base import FormHandler
+from utils import AnimatedWaitContext
 
 
 class PorcentajesHandler(FormHandler):
@@ -26,9 +27,8 @@ class PorcentajesHandler(FormHandler):
         Returns:
             True if successful, False otherwise
         """
-        print('Retrieving taxpayer data...')
-        self.http.random_sleep()
-        taxpayer_page = self.http.get(f'{self.url_host}{link}')
+        with AnimatedWaitContext('Retrieving taxpayer data', self.config.is_verbose):
+            taxpayer_page = self.http.get(f'{self.url_host}{link}')
 
         if not self.contains_text(taxpayer_page, 'Porcentajes de Ingreso por Actividades Económicas'):
             self.send_message('Error', 'No profile available')
@@ -38,9 +38,8 @@ class PorcentajesHandler(FormHandler):
         recover_data = {'ruc': self.cedula, 'categoria': 'PORCENTAJES_ACTIVIDAD'}
         token_recover = self.encrypt_token(recover_data)
 
-        print('Retrieving form data...')
-        self.http.random_sleep()
-        recover_response = self.http.get(f'{self.url_base}/{self.METHOD_RECOVER}?t3={token_recover}')
+        with AnimatedWaitContext('Retrieving form data', self.config.is_verbose):
+            recover_response = self.http.get(f'{self.url_base}/{self.METHOD_RECOVER}?t3={token_recover}')
 
         try:
             recover = json.loads(recover_response)
@@ -94,13 +93,12 @@ class PorcentajesHandler(FormHandler):
         # self.http.random_sleep()
         # verify_response = self.http.post_json(f'{self.url_base}/{self.METHOD_VERIFICATION}', save_data)
         # if verify_response.strip() != '[]':
-        #     self.send_message('Error', verify_response)
+        #     self.notifier.send('Error', verify_response)
         #     return False
 
         # Save data
-        print('Saving percentage data...')
-        self.http.random_sleep()
-        save_response = self.http.post_json(f'{self.url_base}/{self.METHOD_SAVE}', save_data)
+        with AnimatedWaitContext('Saving percentage data', self.config.is_verbose):
+            save_response = self.http.post_json(f'{self.url_base}/{self.METHOD_SAVE}', save_data)
 
         try:
             save_result = json.loads(save_response)
@@ -120,9 +118,9 @@ class PorcentajesHandler(FormHandler):
             return False
 
         # Follow redirect to document
-        print('Redirecting to document...')
         redirect_url = save_result.get('url', '')
-        redirect_page = self.http.get(f'{self.url_base}/{redirect_url}')
+        with AnimatedWaitContext('Redirecting to document', self.config.is_verbose):
+            redirect_page = self.http.get(f'{self.url_base}/{redirect_url}')
 
         if not self.contains_text(redirect_page, 'Enviar Solicitud'):
             self.send_message('Error', "Can't update percentages")
@@ -145,20 +143,20 @@ class PorcentajesHandler(FormHandler):
         document_id = document_string.rstrip(',')
 
         # Accept document
-        print('Confirming document...')
-        self.http.random_sleep()
         accept_data = {'id': document_id}
-        accept_response = self.http.post_json(
-            f'{self.url_base}/{self.METHOD_ACCEPT_DOCUMENT}',
-            accept_data
-        )
+        with AnimatedWaitContext('Confirming document', self.config.is_verbose):
+            accept_response = self.http.post_json(
+                f'{self.url_base}/{self.METHOD_ACCEPT_DOCUMENT}',
+                accept_data
+            )
 
         try:
             accept_result = json.loads(accept_response)
             # Follow final redirect
             final_url = accept_result.get('url', '')
             if final_url:
-                self.http.get(f'{self.url_base}/{final_url}')
+                with AnimatedWaitContext('Finalizing document', self.config.is_verbose):
+                    self.http.get(f'{self.url_base}/{final_url}')
         except json.JSONDecodeError:
             pass  # Continue anyway
 

@@ -4,6 +4,7 @@ import json
 from typing import Any, Dict
 
 from forms.base import FormHandler
+from utils import AnimatedWaitContext
 
 
 class Form955Handler(FormHandler):
@@ -25,31 +26,28 @@ class Form955Handler(FormHandler):
         Returns:
             True if successful, False otherwise
         """
-        print('Preparing receipt management...')
+        with AnimatedWaitContext('Preparing receipt management', self.config.is_verbose):
+            # Get receipt management menu URL
+            receipt_url = self.get_menu_url(self.FORM_AFFIDAVIT)
+            if not receipt_url:
+                self.send_message('Error', 'Receipt management menu not found')
+                return False
 
-        # Get receipt management menu URL
-        receipt_url = self.get_menu_url(self.FORM_AFFIDAVIT)
-        if not receipt_url:
-            self.send_message('Error', 'Receipt management menu not found')
-            return False
-
-        self.http.random_sleep()
-        receipt_page = self.http.get(f'{self.url_base}/{receipt_url}')
+            receipt_page = self.http.get(f'{self.url_base}/{receipt_url}')
 
         if not self.contains_text(receipt_page, 'Gestión de Comprobantes'):
             self.send_message('Error', 'Not able to manage receipts')
             return False
 
         # Get operations list
-        print('Getting access to receipt forms...')
+        with AnimatedWaitContext('Getting access to receipt forms', self.config.is_verbose):
+            operations_data = {'ruc': self.cedula}
+            token_operations = self.encrypt_token(operations_data)
 
-        operations_data = {'ruc': self.cedula}
-        token_operations = self.encrypt_token(operations_data)
-
-        self.http.random_sleep()
-        operations_response = self.http.get(
-            f'{self.url_base}/{self.METHOD_OPERATIONS}?t3={token_operations}'
-        )
+        with AnimatedWaitContext('Fetching receipt operations', self.config.is_verbose):
+            operations_response = self.http.get(
+                f'{self.url_base}/{self.METHOD_OPERATIONS}?t3={token_operations}'
+            )
 
         try:
             operations = json.loads(operations_response)
@@ -69,29 +67,26 @@ class Form955Handler(FormHandler):
             return False
 
         # Load receipt forms page
-        print('Retrieving receipt forms...')
-
-        self.http.random_sleep()
-        receipt_forms = self.http.get(f'{self.url_base}/{confirm_url}')
+        with AnimatedWaitContext('Retrieving receipt forms', self.config.is_verbose):
+            receipt_forms = self.http.get(f'{self.url_base}/{confirm_url}')
 
         if not self.contains_text(receipt_forms, 'Registro de Comprobantes - Presentación de Talón'):
             self.send_message('Error', 'No receipt forms available')
             return False
 
         # Submit the talon
-        print(f'Sending tax form {self.FORM}...')
+        with AnimatedWaitContext(f'Sending tax form {self.FORM}', self.config.is_verbose):
+            talon_data = {
+                'periodo': int(period),
+                'formulario': int(self.FORM)
+            }
+            token_talon = self.encrypt_token(talon_data)
 
-        talon_data = {
-            'periodo': int(period),
-            'formulario': int(self.FORM)
-        }
-        token_talon = self.encrypt_token(talon_data)
-
-        self.http.random_sleep()
-        process_response = self.http.post_json(
-            f'{self.url_base}/{self.METHOD_TALON}?t3={token_talon}',
-            {}
-        )
+        with AnimatedWaitContext('Submitting receipt form', self.config.is_verbose):
+            process_response = self.http.post_json(
+                f'{self.url_base}/{self.METHOD_TALON}?t3={token_talon}',
+                {}
+            )
 
         try:
             result = json.loads(process_response)

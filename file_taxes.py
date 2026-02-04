@@ -19,6 +19,7 @@ from config import Config, load_config, parse_args
 from crypto import encrypt
 from http_client import HTTPClient
 from notifications import get_notifier
+from utils import AnimatedWaitContext, send_message as notify
 
 
 def get_current_period() -> str:
@@ -122,12 +123,10 @@ def attempt_captcha_solve(config: Config, http: HTTPClient, url_base: str, url_h
         )
         return None
 
-    print('Retrying login...')
-
-    # Retry login with captcha solution
-    login_data['g-recaptcha-response'] = captcha_solution
-    http.random_sleep()
-    return http.post_login(f'{url_base}/authenticate', login_data)
+    with AnimatedWaitContext('Captcha solved! Retrying login', config.is_verbose):
+        # Retry login with captcha solution
+        login_data['g-recaptcha-response'] = captcha_solution
+        return http.post_login(f'{url_base}/authenticate', login_data)
 
 
 def perform_login(http: HTTPClient, config: Config, url_base: str, url_host: str, send_message) -> bool:
@@ -144,14 +143,12 @@ def perform_login(http: HTTPClient, config: Config, url_base: str, url_host: str
     Returns:
         True if login succeeded, False otherwise
     """
-    print('Logging in...')
-    http.random_sleep()
-
-    login_data = {
-        'usuario': config.username,
-        'clave': config.password,
-    }
-    login_response = http.post_login(f'{url_base}/authenticate', login_data)
+    with AnimatedWaitContext('Logging in', config.is_verbose):
+        login_data = {
+            'usuario': config.username,
+            'clave': config.password,
+        }
+        login_response = http.post_login(f'{url_base}/authenticate', login_data)
 
     # Check for errors
     if 'Usuario o Contraseña incorrectos' in login_response:
@@ -191,8 +188,8 @@ def check_session(http: HTTPClient, config: Config, url_base: str, url_host: str
     Returns:
         True if logged in (or successfully logged in), False otherwise
     """
-    print('Checking session...')
-    home_page = http.get(url_base)
+    with AnimatedWaitContext('Checking session', config.is_verbose):
+        home_page = http.get(url_base)
 
     if '/eset/logout' in home_page:
         print('Logged in')
@@ -231,9 +228,7 @@ def main() -> int:
 
     def send_message(title: str, message: str) -> None:
         """Send notification with message prefix."""
-        full_message = f'{config.message_prefix}{message}'
-        notifier.send(title, full_message)
-        print(f'{title} - {message}')
+        notify(notifier, title, message, config.message_prefix)
 
     # Initialize HTTP client
     http = HTTPClient(
@@ -261,9 +256,8 @@ def main() -> int:
     import urllib.parse
     token_encoded = urllib.parse.quote(token)
 
-    print('Fetching profile information...')
-    http.random_sleep()
-    profile_response = http.get(f'{URL_BASE}/{METHOD_PROFILE}?t3={token_encoded}')
+    with AnimatedWaitContext('Fetching profile information', config.is_verbose):
+        profile_response = http.get(f'{URL_BASE}/{METHOD_PROFILE}?t3={token_encoded}')
 
     try:
         profile = json.loads(profile_response)
@@ -285,9 +279,8 @@ def main() -> int:
     print(f'Welcome {first_name}!')
 
     # Check profile info changes
-    print('Checking profile info changes...')
-    http.random_sleep()
-    check_profile_response = http.get(f'{URL_BASE}/{METHOD_CHECK_PROFILE}?t3={token_encoded}')
+    with AnimatedWaitContext('Checking profile info changes', config.is_verbose):
+        check_profile_response = http.get(f'{URL_BASE}/{METHOD_CHECK_PROFILE}?t3={token_encoded}')
 
     try:
         check_profile = json.loads(check_profile_response)
@@ -328,9 +321,8 @@ def main() -> int:
         print('No pending profile actions')
 
     # Check pending forms
-    print('Checking pending forms...')
-    http.random_sleep()
-    pending_response = http.get(f'{URL_BASE}/{METHOD_PENDING}?t3={token_encoded}')
+    with AnimatedWaitContext('Checking pending forms', config.is_verbose):
+        pending_response = http.get(f'{URL_BASE}/{METHOD_PENDING}?t3={token_encoded}')
 
     try:
         pending_forms = json.loads(pending_response)
@@ -339,9 +331,8 @@ def main() -> int:
 
     if pending_forms:
         # Get menu items
-        print('Fetching menu items...')
-        http.random_sleep()
-        menu_response = http.get(f'{URL_BASE}/{METHOD_MENU}?t3={token_encoded}')
+        with AnimatedWaitContext('Fetching menu items', config.is_verbose):
+            menu_response = http.get(f'{URL_BASE}/{METHOD_MENU}?t3={token_encoded}')
 
         try:
             menu = json.loads(menu_response)

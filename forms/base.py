@@ -7,6 +7,8 @@ from abc import ABC, abstractmethod
 from html.parser import HTMLParser
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
+from utils import send_message as notify
+
 
 class InputParser(HTMLParser):
     """HTML parser to extract input elements and their attributes."""
@@ -75,8 +77,7 @@ class FormHandler(ABC):
 
     def send_message(self, title: str, message: str) -> None:
         """Send a notification message."""
-        full_message = f'{self.config.message_prefix}{message}'
-        self.notifier.send(title, full_message)
+        notify(self.notifier, title, message, self.config.message_prefix)
 
     def get_menu_url(self, application_code: str) -> Optional[str]:
         """Get URL for a menu application by its code."""

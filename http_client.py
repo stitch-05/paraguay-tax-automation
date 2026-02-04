@@ -90,12 +90,6 @@ class HTTPClient:
             if self.verbose:
                 print(f'Warning: Could not save cookies: {e}')
 
-    def random_sleep(self) -> None:
-        """Sleep for a random duration between 1 and 4 seconds."""
-        sleep_time = random.randint(1, 4)
-        if self.verbose:
-            print(f'Waiting {sleep_time}s between requests...')
-        time.sleep(sleep_time)
 
     def _make_request(
         self,
@@ -136,7 +130,9 @@ class HTTPClient:
         )
 
         if self.debug:
-            print(f'DEBUG: {req.get_method()} {url}')
+            # Clear any animation line and print debug on new line
+            print(f'\r\033[K', end='')  # Clear current line
+            print(f'DEBUG: {req.get_method()} {urllib.parse.unquote(url)}')
             if encoded_data:
                 print(f'DEBUG: Data: {encoded_data[:200]}...' if len(encoded_data) > 200 else f'DEBUG: Data: {encoded_data}')
 
