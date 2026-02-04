@@ -93,7 +93,8 @@ class HTTPClient:
     def random_sleep(self) -> None:
         """Sleep for a random duration between 1 and 4 seconds."""
         sleep_time = random.randint(1, 4)
-        print(f'Waiting {sleep_time}s between requests...')
+        if self.verbose:
+            print(f'Waiting {sleep_time}s between requests...')
         time.sleep(sleep_time)
 
     def _make_request(

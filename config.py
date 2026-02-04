@@ -39,9 +39,9 @@ class Config:
         self.smtp_recv: str = ''
 
         # HTTP client settings
-        self.wget_output: str = '-q'  # -q for quiet, '' for verbose, -d for debug
-        self.wget_flags: str = ''
-        self.verify_ssl: bool = False  # Default to False to match --no-check-certificate
+        self.verbose: bool = False
+        self.debug: bool = False
+        self.verify_ssl: bool = True
 
         # Working directory (same as the script)
         self.working_dir: Path = Path(__file__).parent
@@ -64,11 +64,11 @@ class Config:
 
     @property
     def is_verbose(self) -> bool:
-        return self.wget_output in ('', '-d')
+        return self.verbose or self.debug
 
     @property
     def is_debug(self) -> bool:
-        return self.wget_output == '-d'
+        return self.debug
 
 
 def parse_env_file(filepath: Path) -> dict:
@@ -185,13 +185,14 @@ def load_config(args: Optional[argparse.Namespace] = None) -> Config:
         config.smtp_pwd = env_vars['SMTP_PWD']
     if 'SMTP_RECV' in env_vars:
         config.smtp_recv = env_vars['SMTP_RECV']
-    if 'WGET_OUTPUT' in env_vars:
-        config.wget_output = env_vars['WGET_OUTPUT']
-    if 'WGET_FLAGS' in env_vars:
-        config.wget_flags = env_vars['WGET_FLAGS']
-        # Parse --no-check-certificate flag
-        if '--no-check-certificate' in config.wget_flags:
-            config.verify_ssl = False
+    if 'VERBOSE' in env_vars:
+        config.verbose = env_vars['VERBOSE'].strip().lower() in ('1', 'true', 'yes', 'on')
+    if 'DEBUG' in env_vars:
+        config.debug = env_vars['DEBUG'].strip().lower() in ('1', 'true', 'yes', 'on')
+        if config.debug:
+            config.verbose = True
+    if 'VERIFY_SSL' in env_vars:
+        config.verify_ssl = env_vars['VERIFY_SSL'].strip().lower() in ('1', 'true', 'yes', 'on')
 
     # Override with CLI arguments if provided
     if args:
@@ -229,10 +230,13 @@ def load_config(args: Optional[argparse.Namespace] = None) -> Config:
             config.smtp_recv = args.smtp_recipient
         if args.message_prefix:
             config.message_prefix = args.message_prefix
-        if args.wget_output is not None:
-            config.wget_output = args.wget_output
-        if args.wget_flags:
-            config.wget_flags = args.wget_flags
+        if args.verbose:
+            config.verbose = True
+        if args.debug:
+            config.debug = True
+            config.verbose = True
+        if args.no_verify_ssl:
+            config.verify_ssl = False
 
     return config
 
@@ -288,11 +292,9 @@ Examples:
     parser.add_argument('-Sr', '--smtp-recipient',
                         help='Email recipient(s), separate with semicolon')
 
-    # Debug/verbosity
-    parser.add_argument('-wo', '--wget-output',
-                        help='Output mode: -q (quiet), empty (verbose), -d (debug)')
-    parser.add_argument('-wf', '--wget-flags',
-                        help='Additional flags for HTTP requests')
+    # HTTP client options
+    parser.add_argument('--no-verify-ssl', action='store_true',
+                        help='Disable SSL certificate verification')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Enable verbose output')
     parser.add_argument('-d', '--debug', action='store_true',
@@ -305,11 +307,5 @@ def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
     parser = create_argument_parser()
     args = parser.parse_args()
-
-    # Handle shorthand verbose/debug flags
-    if args.debug:
-        args.wget_output = '-d'
-    elif args.verbose:
-        args.wget_output = ''
 
     return args
