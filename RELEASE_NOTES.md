@@ -14,6 +14,7 @@
 
 ### Bug Fixes
 
+- [`f58cb976`](https://github.com/stitch-05/paraguay-tax-automation/commit/f58cb976bbb241e550cbd73c61bb11faaa8e42e7): Fix request delay calculation to ensure proper timing between HTTP requests.
 - [`5a4777dc`](https://github.com/stitch-05/paraguay-tax-automation/commit/5a4777dc63f2257078c33a98a898fed0f60ff8d9): Fix captcha solver messages for better error reporting.
 - [`533bb47f`](https://github.com/stitch-05/paraguay-tax-automation/commit/533bb47f895fa2a95074cebce4aa32fd40414b5f): Remove deprecated wget flags that caused installation issues.
 
