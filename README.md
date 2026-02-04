@@ -29,6 +29,25 @@ export USERNAME="your_ruc_number"
 export PASSWORD="your_password"
 ```
 
+### Optional: Automatic Captcha Solving
+
+To enable automatic captcha solving with Capsolver:
+
+1. Sign up for a [Capsolver account](https://www.capsolver.com/)
+2. Add your API key to `.env`:
+
+```bash
+export CAPSOLVER_API_KEY="your_capsolver_api_key"
+```
+
+When a captcha is required during login, the script will automatically:
+
+- Detect the captcha type (reCAPTCHA v2)
+- Submit the captcha to Capsolver for solving
+- Retry login with the solved captcha response
+
+If no API key is provided, the script will prompt you to solve the captcha manually.
+
 ### Optional: Notifications
 
 You can configure notifications via Pushover, Signal, or Email. See `.env.example` for all options.
@@ -55,6 +74,9 @@ python file_taxes.py --help
 # Override credentials
 python file_taxes.py -u USERNAME -p PASSWORD
 
+# Use Capsolver for automatic captcha solving
+python file_taxes.py -ca YOUR_CAPSOLVER_API_KEY
+
 # Verbose/debug mode
 python file_taxes.py -v    # verbose
 python file_taxes.py -d    # debug
@@ -78,7 +100,7 @@ This will run the script on the 1st of every month at 6 AM.
 ## Known Limitations
 
 - Form 211 only supports 0 VAT filing
-- Captcha requires manual browser intervention (login once manually first)
+- Captcha solving requires a Capsolver API key (or manual browser intervention)
 
 ## License
 

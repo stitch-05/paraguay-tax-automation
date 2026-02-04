@@ -9,10 +9,12 @@ profile information.
 
 import base64
 import json
+import re
 import sys
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+from captcha_solver import get_capsolver_client
 from config import Config, load_config, parse_args
 from crypto import encrypt
 from http_client import HTTPClient
@@ -37,6 +39,164 @@ def get_current_period() -> str:
         month -= 1
 
     return f'{year}{month:02d}'
+
+
+def extract_captcha_info(html: str) -> Dict[str, Optional[str]]:
+    """
+    Extract captcha information from HTML.
+
+    Returns:
+        Dict with 'type' (recaptcha_v2, hcaptcha, or None) and 'site_key'
+    """
+    info = {'type': None, 'site_key': None}
+
+    # Check for reCAPTCHA v2
+    recaptcha_match = re.search(r'data-sitekey=["\']([^"\']+)["\']', html)
+    if recaptcha_match:
+        info['type'] = 'recaptcha_v2'
+        info['site_key'] = recaptcha_match.group(1)
+        return info
+
+    # Alternative pattern for Google reCAPTCHA
+    recaptcha_match2 = re.search(r'google\.com/recaptcha.*?k=([^&"\'\']+)', html, re.DOTALL)
+    if recaptcha_match2:
+        info['type'] = 'recaptcha_v2'
+        info['site_key'] = recaptcha_match2.group(1)
+        return info
+
+    return info
+
+
+def attempt_captcha_solve(config: Config, http: HTTPClient, url_base: str, url_host: str,
+                         login_data: Dict[str, str], send_message) -> Optional[str]:
+    """
+    Attempt to solve a captcha automatically.
+
+    Args:
+        config: Configuration object
+        http: HTTP client
+        url_base: Base URL
+        url_host: Host URL
+        login_data: Login data dictionary
+        send_message: Function to send notification messages
+
+    Returns:
+        Login response if successful, None if captcha solving failed
+    """
+    capsolver = get_capsolver_client(config.capsolver_api_key, verbose=config.is_verbose)
+
+    if not capsolver:
+        send_message(
+            'Error',
+            f'Captcha required. Please either:\n'
+            f'1. Set CAPSOLVER_API_KEY for automatic solving\n'
+            f'2. Login manually at: https://marangatu.set.gov.py/eset/login?login_error=2&usuario={config.username}'
+        )
+        return None
+
+    print('Captcha required - attempting automatic solving...')
+
+    # Get login page to extract captcha info
+    login_page_url = f'{url_host}/eset/login?login_error=2&usuario={config.username}'
+    login_page = http.get(login_page_url)
+
+    captcha_info = extract_captcha_info(login_page)
+
+    if not captcha_info['type'] or not captcha_info['site_key']:
+        send_message('Error', 'Captcha detected but could not identify type. Please solve it manually.')
+        return None
+
+    print(f"Detected {captcha_info['type']} with site key: {captcha_info['site_key']}")
+
+    # Solve the captcha
+    captcha_solution = None
+    if captcha_info['type'] == 'recaptcha_v2':
+        captcha_solution = capsolver.solve_recaptcha_v2(
+            website_url=login_page_url,
+            website_key=captcha_info['site_key']
+        )
+
+    if not captcha_solution:
+        send_message('Error', 'Failed to solve captcha automatically. Please solve it manually.')
+        return None
+
+    print('Captcha solved! Retrying login...')
+
+    # Retry login with captcha solution
+    login_data['g-recaptcha-response'] = captcha_solution
+    http.random_sleep()
+    return http.post_login(f'{url_base}/authenticate', login_data)
+
+
+def perform_login(http: HTTPClient, config: Config, url_base: str, url_host: str, send_message) -> bool:
+    """
+    Perform login and handle any errors or captchas.
+
+    Args:
+        http: HTTP client
+        config: Configuration object
+        url_base: Base URL for authentication
+        url_host: Host URL
+        send_message: Function to send notification messages
+
+    Returns:
+        True if login succeeded, False otherwise
+    """
+    print('Logging in...')
+    http.random_sleep()
+
+    login_data = {
+        'usuario': config.username,
+        'clave': config.password,
+    }
+    login_response = http.post_login(f'{url_base}/authenticate', login_data)
+
+    # Check for errors
+    if 'Usuario o Contraseña incorrectos' in login_response:
+        send_message('Error', 'Incorrect login credentials')
+        return False
+    elif 'Código de Seguridad no es correcto' in login_response:
+        # Captcha required
+        captcha_response = attempt_captcha_solve(config, http, url_base, url_host, login_data, send_message)
+        if captcha_response is None:
+            return False
+
+        # Check captcha response
+        if 'Usuario o Contraseña incorrectos' in captcha_response:
+            send_message('Error', 'Incorrect login credentials')
+            return False
+        elif 'Código de Seguridad no es correcto' in captcha_response:
+            send_message('Error', 'Captcha solution failed. Please solve it manually.')
+            return False
+        else:
+            print('Logged in successfully with captcha!')
+            return True
+    else:
+        return True
+
+
+def check_session(http: HTTPClient, config: Config, url_base: str, url_host: str, send_message) -> bool:
+    """
+    Check if already logged in, or perform login if needed.
+
+    Args:
+        http: HTTP client
+        config: Configuration object
+        url_base: Base URL
+        url_host: Host URL
+        send_message: Function to send notification messages
+
+    Returns:
+        True if logged in (or successfully logged in), False otherwise
+    """
+    print('Checking session...')
+    home_page = http.get(url_base)
+
+    if '/eset/logout' in home_page:
+        print('Logged in')
+        return True
+    else:
+        return perform_login(http, config, url_base, url_host, send_message)
 
 
 def main() -> int:
@@ -84,40 +244,14 @@ def main() -> int:
     # URLs
     URL_BASE = http.URL_BASE
     URL_HOST = http.URL_HOST
-    METHOD_AUTH = 'authenticate'
     METHOD_PROFILE = 'perfil/publico'
     METHOD_PENDING = 'perfil/vencimientos'
     METHOD_MENU = 'perfil/menu'
     METHOD_CHECK_PROFILE = 'perfil/informacionControlesPerfil'
 
-    # Check session
-    print('Checking session...')
-    home_page = http.get(URL_BASE)
-
-    if '/eset/logout' in home_page:
-        print('Logged in')
-    else:
-        print('Logging in...')
-        http.random_sleep()
-
-        login_data = {
-            'usuario': config.username,
-            'clave': config.password,
-        }
-        login_response = http.post_login(f'{URL_BASE}/{METHOD_AUTH}', login_data)
-
-        if 'Usuario o Contraseña incorrectos' in login_response:
-            send_message('Error', 'Incorrect login credentials')
-            return 1
-        elif 'Código de Seguridad no es correcto' in login_response:
-            send_message(
-                'Error',
-                f'Login on the website and fill out a captcha first '
-                f'https://marangatu.set.gov.py/eset/login?login_error=2&usuario={config.username}'
-            )
-            return 1
-        else:
-            print('Logged in')
+    # Check session and login if needed
+    if not check_session(http, config, URL_BASE, URL_HOST, send_message):
+        return 1
 
     # Get profile
     token = encrypt('{}')

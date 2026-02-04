@@ -15,6 +15,9 @@ class Config:
         self.username: str = ''
         self.password: str = ''
 
+        # Captcha solver
+        self.capsolver_api_key: str = ''
+
         # Notification settings
         self.notification_service: Optional[str] = None
         self.message_prefix: str = '\U0001F1F5\U0001F1FE taxes\n'  # Paraguay flag emoji
@@ -152,6 +155,8 @@ def load_config(args: Optional[argparse.Namespace] = None) -> Config:
         config.username = env_vars['USERNAME']
     if 'PASSWORD' in env_vars:
         config.password = env_vars['PASSWORD']
+    if 'CAPSOLVER_API_KEY' in env_vars:
+        config.capsolver_api_key = env_vars['CAPSOLVER_API_KEY']
     if 'NOTIFICATION_SERVICE' in env_vars:
         config.notification_service = env_vars['NOTIFICATION_SERVICE']
     if 'MESSAGE_PREFIX' in env_vars:
@@ -191,6 +196,8 @@ def load_config(args: Optional[argparse.Namespace] = None) -> Config:
             config.username = args.username
         if args.password:
             config.password = args.password
+        if hasattr(args, 'capsolver_api_key') and args.capsolver_api_key:
+            config.capsolver_api_key = args.capsolver_api_key
         if args.notification_service:
             config.notification_service = args.notification_service
         if args.pushover_token:
@@ -242,6 +249,7 @@ Examples:
     # Credentials
     parser.add_argument('-u', '--username', help='Marangatu login username')
     parser.add_argument('-p', '--password', help='Marangatu login password')
+    parser.add_argument('-ca', '--capsolver-api-key', help='Capsolver API key for automatic captcha solving')
 
     # Notification service
     parser.add_argument('-ns', '--notification-service',
