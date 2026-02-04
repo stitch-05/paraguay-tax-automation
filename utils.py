@@ -3,7 +3,7 @@
 import random
 import threading
 import time
-from typing import Callable, Optional, TypeVar
+from typing import Optional, TypeVar
 
 
 T = TypeVar('T')
@@ -25,6 +25,7 @@ class AnimatedWaitContext:
         self.sleep_time = random.randint(1, 4)  # Random wait time like animated_wait
         self._stop_event = threading.Event()
         self._thread: Optional[threading.Thread] = None
+        self._start_time: Optional[float] = None
 
     def _animate(self):
         """Run the animation in a background thread."""
@@ -43,7 +44,8 @@ class AnimatedWaitContext:
 
     def __enter__(self):
         """Start the animation."""
-        # Start animation thread immediately (it will print the message)
+        # Record start time and start animation thread immediately
+        self._start_time = time.time()
         self._stop_event.clear()
         self._thread = threading.Thread(target=self._animate, daemon=True)
         self._thread.start()
@@ -51,13 +53,17 @@ class AnimatedWaitContext:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Stop the animation."""
-        if self._thread:
+        if self._thread and self._start_time:
+            # Calculate elapsed time and sleep for the remainder
+            elapsed = time.time() - self._start_time
+            remaining = max(0, self.sleep_time - elapsed)
+            if remaining > 0:
+                time.sleep(remaining)
+
             self._stop_event.set()
-            self._thread.join(timeout=2.0)
+            self._thread.join(timeout=0.1)
             # Print final state with 3 dots and checkmark on same line
-            # Include padding to clear any remaining text from verbose mode
             if self.verbose:
-                # Clear the waiting info by including it in the final print
                 print(f'\r{self.message} (waiting {self.sleep_time}s)... ✓')
             else:
                 print(f'\r{self.message}... ✓')
