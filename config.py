@@ -15,7 +15,8 @@ class Config:
         self.username: str = ''
         self.password: str = ''
 
-        # Captcha solver
+        # Captcha solver (NopeCHA free tier by default, Capsolver as paid alternative)
+        self.nopecha_api_key: str = ''
         self.capsolver_api_key: str = ''
 
         # Notification settings
@@ -155,6 +156,8 @@ def load_config(args: Optional[argparse.Namespace] = None) -> Config:
         config.username = env_vars['USERNAME']
     if 'PASSWORD' in env_vars:
         config.password = env_vars['PASSWORD']
+    if 'NOPECHA_API_KEY' in env_vars:
+        config.nopecha_api_key = env_vars['NOPECHA_API_KEY']
     if 'CAPSOLVER_API_KEY' in env_vars:
         config.capsolver_api_key = env_vars['CAPSOLVER_API_KEY']
     if 'NOTIFICATION_SERVICE' in env_vars:
@@ -196,6 +199,8 @@ def load_config(args: Optional[argparse.Namespace] = None) -> Config:
             config.username = args.username
         if args.password:
             config.password = args.password
+        if hasattr(args, 'nopecha_api_key') and args.nopecha_api_key:
+            config.nopecha_api_key = args.nopecha_api_key
         if hasattr(args, 'capsolver_api_key') and args.capsolver_api_key:
             config.capsolver_api_key = args.capsolver_api_key
         if args.notification_service:
@@ -249,7 +254,10 @@ Examples:
     # Credentials
     parser.add_argument('-u', '--username', help='Marangatu login username')
     parser.add_argument('-p', '--password', help='Marangatu login password')
-    parser.add_argument('-ca', '--capsolver-api-key', help='Capsolver API key for automatic captcha solving')
+
+    # Captcha solving (NopeCHA free tier used by default)
+    parser.add_argument('-nc', '--nopecha-api-key', help='NopeCHA API key (optional, free tier works without key)')
+    parser.add_argument('-ca', '--capsolver-api-key', help='Capsolver API key (paid alternative)')
 
     # Notification service
     parser.add_argument('-ns', '--notification-service',

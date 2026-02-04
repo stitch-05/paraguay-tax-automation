@@ -29,24 +29,30 @@ export USERNAME="your_ruc_number"
 export PASSWORD="your_password"
 ```
 
-### Optional: Automatic Captcha Solving
+### Automatic Captcha Solving
 
-To enable automatic captcha solving with Capsolver:
+The script uses [NopeCHA](https://nopecha.com/) free tier by default for automatic captcha solving:
 
-1. Sign up for a [Capsolver account](https://www.capsolver.com/)
-2. Add your API key to `.env`:
-
-```bash
-export CAPSOLVER_API_KEY="your_capsolver_api_key"
-```
+- **Free tier**: 5 reCAPTCHA v2 solves per day (no API key needed)
+- **With API key**: Higher daily limits
 
 When a captcha is required during login, the script will automatically:
 
 - Detect the captcha type (reCAPTCHA v2)
-- Submit the captcha to Capsolver for solving
+- Submit the captcha to NopeCHA for solving
 - Retry login with the solved captcha response
 
-If no API key is provided, the script will prompt you to solve the captcha manually.
+If NopeCHA fails, you'll be prompted to solve the captcha manually in a browser.
+
+#### Optional: Custom API keys
+
+```bash
+# NopeCHA (recommended, free tier available)
+export NOPECHA_API_KEY="your_nopecha_api_key"
+
+# Or Capsolver (paid alternative)
+export CAPSOLVER_API_KEY="your_capsolver_api_key"
+```
 
 ### Optional: Notifications
 
@@ -74,7 +80,10 @@ python file_taxes.py --help
 # Override credentials
 python file_taxes.py -u USERNAME -p PASSWORD
 
-# Use Capsolver for automatic captcha solving
+# Use NopeCHA with API key (higher limits than free tier)
+python file_taxes.py -nc YOUR_NOPECHA_API_KEY
+
+# Or use Capsolver (paid)
 python file_taxes.py -ca YOUR_CAPSOLVER_API_KEY
 
 # Verbose/debug mode
@@ -100,7 +109,7 @@ This will run the script on the 1st of every month at 6 AM.
 ## Known Limitations
 
 - Form 211 only supports 0 VAT filing
-- Captcha solving requires a Capsolver API key (or manual browser intervention)
+- NopeCHA free tier allows 5 reCAPTCHA solves/day (enough for monthly tax filing)
 
 ## License
 

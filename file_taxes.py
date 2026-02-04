@@ -14,7 +14,7 @@ import sys
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from captcha_solver import get_capsolver_client
+from captcha_solver import get_captcha_client
 from config import Config, load_config, parse_args
 from crypto import encrypt
 from http_client import HTTPClient
@@ -72,6 +72,9 @@ def attempt_captcha_solve(config: Config, http: HTTPClient, url_base: str, url_h
     """
     Attempt to solve a captcha automatically.
 
+    Uses NopeCHA free tier by default (5 reCAPTCHA v2 solves/day).
+    Falls back to Capsolver if configured.
+
     Args:
         config: Configuration object
         http: HTTP client
@@ -83,18 +86,13 @@ def attempt_captcha_solve(config: Config, http: HTTPClient, url_base: str, url_h
     Returns:
         Login response if successful, None if captcha solving failed
     """
-    capsolver = get_capsolver_client(config.capsolver_api_key, verbose=config.is_verbose)
+    captcha_client = get_captcha_client(
+        nopecha_api_key=config.nopecha_api_key,
+        capsolver_api_key=config.capsolver_api_key,
+        verbose=config.is_verbose
+    )
 
-    if not capsolver:
-        send_message(
-            'Error',
-            f'Captcha required. Please either:\n'
-            f'1. Set CAPSOLVER_API_KEY for automatic solving\n'
-            f'2. Login manually at: https://marangatu.set.gov.py/eset/login?login_error=2&usuario={config.username}'
-        )
-        return None
-
-    print('Captcha required - attempting automatic solving...')
+    print('Captcha required - attempting automatic solving with NopeCHA...')
 
     # Get login page to extract captcha info
     login_page_url = f'{url_host}/eset/login?login_error=2&usuario={config.username}'
@@ -111,13 +109,17 @@ def attempt_captcha_solve(config: Config, http: HTTPClient, url_base: str, url_h
     # Solve the captcha
     captcha_solution = None
     if captcha_info['type'] == 'recaptcha_v2':
-        captcha_solution = capsolver.solve_recaptcha_v2(
+        captcha_solution = captcha_client.solve_recaptcha_v2(
             website_url=login_page_url,
             website_key=captcha_info['site_key']
         )
 
     if not captcha_solution:
-        send_message('Error', 'Failed to solve captcha automatically. Please solve it manually.')
+        send_message(
+            'Error',
+            f'Failed to solve captcha automatically. Please solve it manually at:\n'
+            f'https://marangatu.set.gov.py/eset/login?login_error=2&usuario={config.username}'
+        )
         return None
 
     print('Captcha solved! Retrying login...')
