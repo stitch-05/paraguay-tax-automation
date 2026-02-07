@@ -4,6 +4,7 @@
 
 ### Features
 
+- [`c2938185`](https://github.com/stitch-05/paraguay-tax-automation/commit/c293818574f9a4f612ac6eee112403311c530464): Refactor process method parameters for consistency across form handlers.
 - [`ecb91975`](https://github.com/stitch-05/paraguay-tax-automation/commit/ecb9197513d13702b05bbfb5c3b0120fbd29b91b): Add animated console outputs for improved user experience during automation.
 - [`2d2075ff`](https://github.com/stitch-05/paraguay-tax-automation/commit/2d2075fffecec06e8fb941e11cac350b98754459): Switch to NopeCHA free tier for captcha solving with better cost efficiency.
 - [`89a0a9c5`](https://github.com/stitch-05/paraguay-tax-automation/commit/89a0a9c5b451105c231292e8a364c10550701819): Add notification message printing for better visibility of sent notifications.
@@ -14,12 +15,16 @@
 
 ### Bug Fixes
 
+- [`94bcee8e`](https://github.com/stitch-05/paraguay-tax-automation/commit/94bcee8e89095d23e1942c473a865501b7acd581): Fix response icon display on failure.
+- [`f7d43778`](https://github.com/stitch-05/paraguay-tax-automation/commit/f7d43778aaf4835522d1d81e076c4e8493fb615c): Make NopeCHA instructions clearer for better user guidance.
+- [`1512931`](https://github.com/stitch-05/paraguay-tax-automation/commit/15129313821c915f14e059c8f61c6aa1283e4ca0): Fix type issues for improved code reliability.
 - [`f58cb976`](https://github.com/stitch-05/paraguay-tax-automation/commit/f58cb976bbb241e550cbd73c61bb11faaa8e42e7): Fix request delay calculation to ensure proper timing between HTTP requests.
 - [`5a4777dc`](https://github.com/stitch-05/paraguay-tax-automation/commit/5a4777dc63f2257078c33a98a898fed0f60ff8d9): Fix captcha solver messages for better error reporting.
 - [`533bb47f`](https://github.com/stitch-05/paraguay-tax-automation/commit/533bb47f895fa2a95074cebce4aa32fd40414b5f): Remove deprecated wget flags that caused installation issues.
 
 ### Documentation
 
+- [`d300fdf4`](https://github.com/stitch-05/paraguay-tax-automation/commit/d300fdf4d63ee32a9bf51ca2ab9c5895b1abc2f1): Add Copilot instructions for AI-assisted development.
 - [`b0db773f`](https://github.com/stitch-05/paraguay-tax-automation/commit/b0db773f77ec770bccc600d82281de288060ce8d): Add CLAUDE.md with Claude Code guidance and coding assistant best practices.
 - [`c67556e2`](https://github.com/stitch-05/paraguay-tax-automation/commit/c67556e27cbe0726fac2f0436c045ce7565697d9): Update project details and metadata.
 - [`ebed74c0`](https://github.com/stitch-05/paraguay-tax-automation/commit/ebed74c01ac8e58cb0172be02435d8ede0d467ca): Add AI skill documentation for automated task handling.
