@@ -62,11 +62,12 @@ class AnimatedWaitContext:
 
             self._stop_event.set()
             self._thread.join(timeout=0.1)
-            # Print final state with 3 dots and checkmark on same line
+            # Print final state with 3 dots and checkmark/X depending on success
+            icon = '✓' if exc_type is None else 'X'
             if self.verbose:
-                print(f'\r{self.message} (waiting {self.sleep_time}s)... ✓')
+                print(f'\r{self.message} (waiting {self.sleep_time}s)... {icon}')
             else:
-                print(f'\r{self.message}... ✓')
+                print(f'\r{self.message}... {icon}')
 
 
 def send_message(notifier, title: str, message: str, message_prefix: str = '') -> None:
