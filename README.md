@@ -31,10 +31,18 @@ export PASSWORD="your_password"
 
 ### Automatic Captcha Solving
 
-The script uses [NopeCHA](https://nopecha.com/) free tier by default for automatic captcha solving:
+The script uses [NopeCHA](https://nopecha.com/) for automatic captcha solving.
 
-- **Free tier**: 5 reCAPTCHA v2 solves per day (no API key needed)
-- **With API key**: Higher daily limits
+**To use the free tier** (5 reCAPTCHA v2 solves per day):
+
+1. Uncomment the `NOPECHA_API_KEY` line in `.env`
+2. Leave it empty: `export NOPECHA_API_KEY=""`
+
+**For higher limits**, get an API key at [nopecha.com](https://nopecha.com/) and set it:
+
+```bash
+export NOPECHA_API_KEY="your_nopecha_api_key"
+```
 
 When a captcha is required during login, the script will automatically:
 
@@ -44,13 +52,9 @@ When a captcha is required during login, the script will automatically:
 
 If NopeCHA fails, you'll be prompted to solve the captcha manually in a browser.
 
-#### Optional: Custom API keys
+#### Alternative: Capsolver (paid service)
 
 ```bash
-# NopeCHA (recommended, free tier available)
-export NOPECHA_API_KEY="your_nopecha_api_key"
-
-# Or Capsolver (paid alternative)
 export CAPSOLVER_API_KEY="your_capsolver_api_key"
 ```
 
