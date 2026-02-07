@@ -354,7 +354,7 @@ def main() -> int:
             print(f'Tax form no. {tax} needs to be filed')
 
             if tax in FORM_HANDLERS:
-                if requested_period == current_period:
+                if requested_period == current_period or config.mockup_mode:
                     handler_class = FORM_HANDLERS[tax]
                     handler = handler_class(
                         http_client=http,
