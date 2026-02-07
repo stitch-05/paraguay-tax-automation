@@ -49,7 +49,7 @@ def extract_captcha_info(html: str) -> Dict[str, Optional[str]]:
     Returns:
         Dict with 'type' (recaptcha_v2, hcaptcha, or None) and 'site_key'
     """
-    info = {'type': None, 'site_key': None}
+    info: Dict[str, Optional[str]] = {'type': None, 'site_key': None}
 
     # Check for reCAPTCHA v2
     recaptcha_match = re.search(r'data-sitekey=["\']([^"\']+)["\']', html)
@@ -345,8 +345,8 @@ def main() -> int:
         current_period = get_current_period()
 
         for pending in pending_forms:
-            tax = pending.get('impuesto', '')
-            requested_period = pending.get('periodo', '')
+            tax = str(pending.get('impuesto', ''))
+            requested_period = str(pending.get('periodo', ''))
 
             print('================')
             print(f'Tax form no. {tax} needs to be filed')
