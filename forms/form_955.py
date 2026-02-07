@@ -16,16 +16,17 @@ class Form955Handler(FormHandler):
     FORM = '241'
     RECEIPT_MANAGEMENT_ID = '6'
 
-    def process(self, period: str) -> bool:
+    def process(self, period_or_link: str) -> bool:
         """
         Process receipt management form 955.
 
         Args:
-            period: The fiscal period in YYYYMM format
+            period_or_link: The fiscal period in YYYYMM format
 
         Returns:
             True if successful, False otherwise
         """
+        period = period_or_link
         with AnimatedWaitContext('Preparing receipt management', self.config.is_verbose):
             # Get receipt management menu URL
             receipt_url = self.get_menu_url(self.FORM_AFFIDAVIT)

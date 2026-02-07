@@ -17,16 +17,17 @@ class PorcentajesHandler(FormHandler):
     METHOD_SAVE = 'actualizacion/guardar?'
     METHOD_ACCEPT_DOCUMENT = 'ru/documento/archivos/aceptarDocumento'
 
-    def process(self, link: str) -> bool:
+    def process(self, period_or_link: str) -> bool:
         """
         Process income percentages update.
 
         Args:
-            link: The URL link to the update form
+            period_or_link: The URL link to the update form
 
         Returns:
             True if successful, False otherwise
         """
+        link = period_or_link
         with AnimatedWaitContext('Retrieving taxpayer data', self.config.is_verbose):
             taxpayer_page = self.http.get(f'{self.url_host}{link}')
 

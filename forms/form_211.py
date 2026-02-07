@@ -17,16 +17,17 @@ class Form211Handler(FormHandler):
     TAX = '211'
     FORM = '120'
 
-    def process(self, period: str) -> bool:
+    def process(self, period_or_link: str) -> bool:
         """
         Process VAT form 211.
 
         Args:
-            period: The fiscal period in YYYYMM format
+            period_or_link: The fiscal period in YYYYMM format
 
         Returns:
             True if successful, False otherwise
         """
+        period = period_or_link
         with AnimatedWaitContext('Preparing tax form', self.config.is_verbose):
             # Get taxpayer menu URL
             taxpayer_url = self.get_menu_url(self.FORM_AFFIDAVIT)

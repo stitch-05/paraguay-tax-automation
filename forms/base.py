@@ -34,8 +34,8 @@ class DivAttributeParser(HTMLParser):
     def handle_starttag(self, tag: str, attrs: List[Tuple[str, Optional[str]]]) -> None:
         if tag == 'div':
             attr_dict = dict(attrs)
-            controller = attr_dict.get('data-ng-controller', '')
-            if self.controller_name in controller:
+            controller = attr_dict.get('data-ng-controller')
+            if controller is not None and self.controller_name in controller:
                 self.ng_init_value = attr_dict.get('data-ng-init')
 
 
