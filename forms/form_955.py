@@ -27,7 +27,7 @@ class Form955Handler(FormHandler):
             True if successful, False otherwise
         """
         period = period_or_link
-        with AnimatedWaitContext('Preparing receipt management', self.config.is_verbose):
+        with AnimatedWaitContext('Preparing receipt management', self.config.is_verbose, self.config.mockup_mode):
             # Get receipt management menu URL
             receipt_url = self.get_menu_url(self.FORM_AFFIDAVIT)
             if not receipt_url:
@@ -41,11 +41,11 @@ class Form955Handler(FormHandler):
             return False
 
         # Get operations list
-        with AnimatedWaitContext('Getting access to receipt forms', self.config.is_verbose):
+        with AnimatedWaitContext('Getting access to receipt forms', self.config.is_verbose, self.config.mockup_mode):
             operations_data = {'ruc': self.cedula}
             token_operations = self.encrypt_token(operations_data)
 
-        with AnimatedWaitContext('Fetching receipt operations', self.config.is_verbose):
+        with AnimatedWaitContext('Fetching receipt operations', self.config.is_verbose, self.config.mockup_mode):
             operations_response = self.http.get(
                 f'{self.url_base}/{self.METHOD_OPERATIONS}?t3={token_operations}'
             )
@@ -68,7 +68,7 @@ class Form955Handler(FormHandler):
             return False
 
         # Load receipt forms page
-        with AnimatedWaitContext('Retrieving receipt forms', self.config.is_verbose):
+        with AnimatedWaitContext('Retrieving receipt forms', self.config.is_verbose, self.config.mockup_mode):
             receipt_forms = self.http.get(f'{self.url_base}/{confirm_url}')
 
         if not self.contains_text(receipt_forms, 'Registro de Comprobantes - Presentación de Talón'):
@@ -76,14 +76,14 @@ class Form955Handler(FormHandler):
             return False
 
         # Submit the talon
-        with AnimatedWaitContext(f'Sending tax form {self.FORM}', self.config.is_verbose):
+        with AnimatedWaitContext(f'Sending tax form {self.FORM}', self.config.is_verbose, self.config.mockup_mode):
             talon_data = {
                 'periodo': int(period),
                 'formulario': int(self.FORM)
             }
             token_talon = self.encrypt_token(talon_data)
 
-        with AnimatedWaitContext('Submitting receipt form', self.config.is_verbose):
+        with AnimatedWaitContext('Submitting receipt form', self.config.is_verbose, self.config.mockup_mode):
             process_response = self.http.post_json(
                 f'{self.url_base}/{self.METHOD_TALON}?t3={token_talon}',
                 {}

@@ -28,7 +28,7 @@ class PorcentajesHandler(FormHandler):
             True if successful, False otherwise
         """
         link = period_or_link
-        with AnimatedWaitContext('Retrieving taxpayer data', self.config.is_verbose):
+        with AnimatedWaitContext('Retrieving taxpayer data', self.config.is_verbose, self.config.mockup_mode):
             taxpayer_page = self.http.get(f'{self.url_host}{link}')
 
         if not self.contains_text(taxpayer_page, 'Porcentajes de Ingreso por Actividades Económicas'):
@@ -39,7 +39,7 @@ class PorcentajesHandler(FormHandler):
         recover_data = {'ruc': self.cedula, 'categoria': 'PORCENTAJES_ACTIVIDAD'}
         token_recover = self.encrypt_token(recover_data)
 
-        with AnimatedWaitContext('Retrieving form data', self.config.is_verbose):
+        with AnimatedWaitContext('Retrieving form data', self.config.is_verbose, self.config.mockup_mode):
             recover_response = self.http.get(f'{self.url_base}/{self.METHOD_RECOVER}?t3={token_recover}')
 
         try:
@@ -98,7 +98,7 @@ class PorcentajesHandler(FormHandler):
         #     return False
 
         # Save data
-        with AnimatedWaitContext('Saving percentage data', self.config.is_verbose):
+        with AnimatedWaitContext('Saving percentage data', self.config.is_verbose, self.config.mockup_mode):
             save_response = self.http.post_json(f'{self.url_base}/{self.METHOD_SAVE}', save_data)
 
         try:
@@ -120,7 +120,7 @@ class PorcentajesHandler(FormHandler):
 
         # Follow redirect to document
         redirect_url = save_result.get('url', '')
-        with AnimatedWaitContext('Redirecting to document', self.config.is_verbose):
+        with AnimatedWaitContext('Redirecting to document', self.config.is_verbose, self.config.mockup_mode):
             redirect_page = self.http.get(f'{self.url_base}/{redirect_url}')
 
         if not self.contains_text(redirect_page, 'Enviar Solicitud'):
@@ -145,7 +145,7 @@ class PorcentajesHandler(FormHandler):
 
         # Accept document
         accept_data = {'id': document_id}
-        with AnimatedWaitContext('Confirming document', self.config.is_verbose):
+        with AnimatedWaitContext('Confirming document', self.config.is_verbose, self.config.mockup_mode):
             accept_response = self.http.post_json(
                 f'{self.url_base}/{self.METHOD_ACCEPT_DOCUMENT}',
                 accept_data
@@ -156,7 +156,7 @@ class PorcentajesHandler(FormHandler):
             # Follow final redirect
             final_url = accept_result.get('url', '')
             if final_url:
-                with AnimatedWaitContext('Finalizing document', self.config.is_verbose):
+                with AnimatedWaitContext('Finalizing document', self.config.is_verbose, self.config.mockup_mode):
                     self.http.get(f'{self.url_base}/{final_url}')
         except json.JSONDecodeError:
             pass  # Continue anyway

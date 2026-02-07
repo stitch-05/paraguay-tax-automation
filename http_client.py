@@ -24,13 +24,17 @@ class HTTPClient:
         user_agents_file: Path,
         verify_ssl: bool = False,
         verbose: bool = False,
-        debug: bool = False
+        debug: bool = False,
+        mockup_mode: bool = False,
+        mockup_dir: Optional[Path] = None
     ):
         self.cookies_file = cookies_file
         self.user_agents_file = user_agents_file
         self.verify_ssl = verify_ssl
         self.verbose = verbose
         self.debug = debug
+        self.mockup_mode = mockup_mode
+        self.mockup_dir = mockup_dir
 
         # Load cookies
         self.cookie_jar = http.cookiejar.MozillaCookieJar(str(cookies_file))
@@ -82,6 +86,55 @@ class HTTPClient:
 
         return default_ua
 
+    def _load_mockup_file(self, url: str) -> str:
+        """Load mockup data from local file based on URL."""
+        if not self.mockup_dir or not self.mockup_dir.exists():
+            raise FileNotFoundError(f"Mockup directory not found: {self.mockup_dir}")
+
+        # Parse URL to get path and query params
+        parsed = urllib.parse.urlparse(url)
+        path = parsed.path
+
+        # Remove leading slash and extract path components
+        if path.startswith('/'):
+            path = path[1:]
+
+        # Map URL path to file path
+        # e.g., /eset/perfil/vencimientos -> __mockup__/eset/perfil/vencimientos.json
+        # e.g., /eset -> __mockup__/eset/index.json
+        # First try with .json extension
+        json_file = self.mockup_dir / f"{path}.json"
+        html_file = self.mockup_dir / f"{path}.html"
+        index_json = self.mockup_dir / path / "index.json"
+        index_html = self.mockup_dir / path / "index.html"
+
+        target_file = None
+        if json_file.exists():
+            target_file = json_file
+        elif html_file.exists():
+            target_file = html_file
+        elif index_json.exists():
+            target_file = index_json
+        elif index_html.exists():
+            target_file = index_html
+        else:
+            # Try without extension
+            plain_file = self.mockup_dir / path
+            if plain_file.exists() and plain_file.is_file():
+                target_file = plain_file
+
+        if not target_file:
+            raise FileNotFoundError(
+                f"Mockup file not found for URL: {url}\n"
+                f"Tried: {json_file}, {html_file}, {index_json}, {index_html}"
+            )
+
+        if self.verbose or self.debug:
+            print(f"MOCKUP FILE: {target_file}")
+
+        with open(target_file, 'r', encoding='utf-8') as f:
+            return f.read()
+
     def save_cookies(self) -> None:
         """Save cookies to file."""
         try:
@@ -99,6 +152,13 @@ class HTTPClient:
         method: Optional[str] = None
     ) -> str:
         """Make an HTTP request and return the response body."""
+        # Check if mockup mode is enabled
+        if self.mockup_mode:
+            if self.debug:
+                print(f'\r\033[K', end='')  # Clear current line
+                print(f'DEBUG: {method or ("POST" if data else "GET")} {urllib.parse.unquote(url)}')
+            return self._load_mockup_file(url)
+
         request_headers = {
             'User-Agent': self.user_agent,
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',

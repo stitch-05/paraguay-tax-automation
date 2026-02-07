@@ -84,6 +84,9 @@ python file_taxes.py --help
 # Override credentials
 python file_taxes.py -u USERNAME -p PASSWORD
 
+# Use mockup data for testing (no real server requests)
+python file_taxes.py --mockup -v
+
 # Use NopeCHA with API key (higher limits than free tier)
 python file_taxes.py -nc YOUR_NOPECHA_API_KEY
 
@@ -94,6 +97,23 @@ python file_taxes.py -ca YOUR_CAPSOLVER_API_KEY
 python file_taxes.py -v    # verbose
 python file_taxes.py -d    # debug
 ```
+
+### Mockup Mode for Development
+
+For development and testing without making real server requests:
+
+```bash
+python file_taxes.py --mockup --verbose
+```
+
+In mockup mode, the HTTP client reads responses from local files in the `__mockup__/` directory instead of making network requests. This is useful for:
+
+- Offline development and testing
+- Avoiding rate limits during development
+- Examining server response structures
+- Testing error handling
+
+See [`__mockup__/README.md`](__mockup__/README.md) for details on the directory structure and URL mapping.
 
 ### Run automatically via cron
 

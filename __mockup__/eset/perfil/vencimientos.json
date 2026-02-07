@@ -1,0 +1,18 @@
+[
+  {
+    "impuesto": 211,
+    "impuestoNombre": "IMP.AL VALOR AGREGADO  - GRAVADAS Y EXONERADAS - EXPORTADORES",
+    "sigla": "IVA  General",
+    "ruc": "8765432",
+    "fechaVencimiento": "23/02/2026",
+    "periodo": 202601
+  },
+  {
+    "impuesto": 955,
+    "impuestoNombre": "REGISTRO MENSUAL DE COMPROBANTES",
+    "sigla": "REG.MENSUAL COMPROB.",
+    "ruc": "8765432",
+    "fechaVencimiento": "24/03/2026",
+    "periodo": 202601
+  }
+]

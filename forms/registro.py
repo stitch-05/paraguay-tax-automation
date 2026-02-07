@@ -29,7 +29,7 @@ class RegistroHandler(FormHandler):
             True if successful, False otherwise
         """
         link = period_or_link
-        with AnimatedWaitContext('Retrieving taxpayer data', self.config.is_verbose):
+        with AnimatedWaitContext('Retrieving taxpayer data', self.config.is_verbose, self.config.mockup_mode):
             taxpayer_page = self.http.get(f'{self.url_host}{link}')
 
         if not self.contains_text(taxpayer_page, 'Actualización de Contribuyente'):
@@ -40,7 +40,7 @@ class RegistroHandler(FormHandler):
         recover_data = {'ruc': self.cedula, 'categoria': 'EDICION'}
         token_recover = self.encrypt_token(recover_data)
 
-        with AnimatedWaitContext('Retrieving form data', self.config.is_verbose):
+        with AnimatedWaitContext('Retrieving form data', self.config.is_verbose, self.config.mockup_mode):
             recover_response = self.http.get(f'{self.url_base}/{self.METHOD_RECOVER}?t3={token_recover}')
 
         try:
@@ -127,7 +127,7 @@ class RegistroHandler(FormHandler):
             'captura': sub_data
         }
 
-        with AnimatedWaitContext('Checking step', self.config.is_verbose):
+        with AnimatedWaitContext('Checking step', self.config.is_verbose, self.config.mockup_mode):
             check_response = self.http.post_json(f'{self.url_base}/{self.METHOD_CHECK_STEP}', check_data)
 
         if check_response.strip() != '[]':
@@ -154,7 +154,7 @@ class RegistroHandler(FormHandler):
             'captura': sub_data
         }
 
-        with AnimatedWaitContext('Verifying data', self.config.is_verbose):
+        with AnimatedWaitContext('Verifying data', self.config.is_verbose, self.config.mockup_mode):
             verify_response = self.http.post_json(f'{self.url_base}/{self.METHOD_VERIFICATION}', verify_data)
 
         if verify_response.strip() != '[]':
@@ -162,7 +162,7 @@ class RegistroHandler(FormHandler):
             return False
 
         # Save data
-        with AnimatedWaitContext('Saving tax payer data', self.config.is_verbose):
+        with AnimatedWaitContext('Saving tax payer data', self.config.is_verbose, self.config.mockup_mode):
             save_response = self.http.post_json(f'{self.url_base}/{self.METHOD_SAVE}', verify_data)
 
         try:
@@ -184,7 +184,7 @@ class RegistroHandler(FormHandler):
 
         # Follow redirect to document
         redirect_url = save_result.get('url', '')
-        with AnimatedWaitContext('Redirecting to document', self.config.is_verbose):
+        with AnimatedWaitContext('Redirecting to document', self.config.is_verbose, self.config.mockup_mode):
             redirect_page = self.http.get(f'{self.url_base}/{redirect_url}')
 
         if not self.contains_text(redirect_page, 'Enviar Solicitud'):
@@ -209,7 +209,7 @@ class RegistroHandler(FormHandler):
 
         # Accept document
         accept_data = {'id': document_id}
-        with AnimatedWaitContext('Confirming document', self.config.is_verbose):
+        with AnimatedWaitContext('Confirming document', self.config.is_verbose, self.config.mockup_mode):
             accept_response = self.http.post_json(
                 f'{self.url_base}/{self.METHOD_ACCEPT_DOCUMENT}',
                 accept_data
@@ -224,7 +224,7 @@ class RegistroHandler(FormHandler):
         # Follow final redirect
         final_url = accept_result.get('url', '')
         if final_url:
-            with AnimatedWaitContext('Finalizing document', self.config.is_verbose):
+            with AnimatedWaitContext('Finalizing document', self.config.is_verbose, self.config.mockup_mode):
                 self.http.get(f'{self.url_base}/{final_url}')
 
         self.send_message('Success!', 'Tax payer info updated successfully!')

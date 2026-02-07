@@ -28,7 +28,7 @@ class Form211Handler(FormHandler):
             True if successful, False otherwise
         """
         period = period_or_link
-        with AnimatedWaitContext('Preparing tax form', self.config.is_verbose):
+        with AnimatedWaitContext('Preparing tax form', self.config.is_verbose, self.config.mockup_mode):
             # Get taxpayer menu URL
             taxpayer_url = self.get_menu_url(self.FORM_AFFIDAVIT)
             if not taxpayer_url:
@@ -42,7 +42,7 @@ class Form211Handler(FormHandler):
             return False
 
         # Get permission to create form
-        with AnimatedWaitContext('Retrieving tax form', self.config.is_verbose):
+        with AnimatedWaitContext('Retrieving tax form', self.config.is_verbose, self.config.mockup_mode):
             permit_data = {
                 'ruc': self.cedula,
                 'dv': self.dv,
@@ -78,7 +78,7 @@ class Form211Handler(FormHandler):
         # Build form data from inputs
         form_data: Dict[str, Any] = {'_cyp': cyp}
 
-        with AnimatedWaitContext('Please wait! Processing tax form data', self.config.is_verbose):
+        with AnimatedWaitContext('Please wait! Processing tax form data', self.config.is_verbose, self.config.mockup_mode):
             for inp in inputs:
                 name = inp.get('name', '')
                 value = inp.get('value', '')
@@ -110,7 +110,7 @@ class Form211Handler(FormHandler):
                     form_data[name] = value
 
         # Submit the form
-        with AnimatedWaitContext('Sending tax form', self.config.is_verbose):
+        with AnimatedWaitContext('Sending tax form', self.config.is_verbose, self.config.mockup_mode):
             # Remove spaces from JSON (matching Bash behavior)
             json_data = json.dumps(form_data, separators=(',', ':'))
             final_response = self.http.post_json(f'{self.url_base}/{self.METHOD_PRESENTAR}', json_data)

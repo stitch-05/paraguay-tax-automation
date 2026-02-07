@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+
+
+<html lang="es" class="no-js">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="author" content="SET" />
+<meta name="company" content="SET" />
+<meta name="abstract" content="Marangatu" />
+
+
+<link rel="apple-touch-icon" sizes="180x180"
+	href="/eset/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png"
+	href="/eset/img/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png"
+	href="/eset/img/favicons/favicon-16x16.png" sizes="16x16" />
+<link rel="manifest"
+	href="/eset/img/favicons/manifest.json">
+<link rel="mask-icon"
+	href="/eset/img/favicons/safari-pinned-tab.svg"
+	color="#84ba49" />
+<meta name="theme-color" content="#343a40" />
+
+<title>Presentar Declaración |
+	MARANGATU</title>
+
+
+
+
+
+
+
+
+<!-- Google Fonts -->
+<script type="text/javascript" src="/eset/ruxitagentjs_ICANVfqru_10327251022105625.js" data-dtconfig="app=2059f1460a86b76b|cuc=yt07k0k6|owasp=1|mel=100000|featureHash=ICANVfqru|dpvc=1|lastModification=1769514607979|tp=500,50,0|rdnt=1|uxrgce=1|srbbv=2|agentUri=/eset/ruxitagentjs_ICANVfqru_10327251022105625.js|reportUrl=/eset/rb_a09b604e-b439-4709-b235-0bd0ad278ec3|rid=RID_1749703796|rpid=2077436095|domain=set.gov.py"></script><link href="/eset/fonts/marangatu-fonts.css"
+	rel="stylesheet">
+
+
+
+
+
+
+
+
+
+		<link rel="stylesheet" href="/eset/css/themes/identidad/bootstrap-custom.css" />
+
+		<link rel="stylesheet" href="/eset/css/libs/font-awesome/css/font-awesome.css" />
+
+		<link rel="stylesheet" href="/eset/css/fw/directive/mgtu-directives.css" />
+
+		<link rel="stylesheet" href="/eset/css/libs/ng-dialog/ngDialog.min.css" />
+
+		<link rel="stylesheet" href="/eset/css/libs/ng-dialog/ngDialog-theme-default.min.css" />
+
+		<link rel="stylesheet" href="/eset/css/libs/animate.css/animate.min.css" />
+
+		<link rel="stylesheet" href="/eset/css/themes/identidad/marangatu.css" />
+
+
+
+
+<!-- styles -->
+
+
+<!-- end styles -->
+
+</head>
+
+
+
+<body class="layout-trabajo ambiente-prod">
+
+
+
+
+	<div data-ng-app="bd.declaracion">
+		<div class="wrapper d-flex flex-column">
+			<header>
+
+
+
+
+
+
+
+<div data-ng-controller="TopBarController as vm"
+	data-ng-init="vm.inicio('trabajo', '2026-02-01T00:00:29')">
+
+	<div class="fixed-top">
+
+
+
+
+
+
+		<nav data-mgtu-scroll
+			class="navbar  navbar-expand-lg navbar-dark bg-dark">
+
+			<a class="navbar-brand" href="#">
+				<img
+					src="/eset/img/themes/identidad/logo-top-navbar.svg"
+					onerror="/eset/img/themes/identidad/logo-top-navbar.png">
+			</a>
+
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarTogglerHeader"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+
+
+			<div class="collapse navbar-collapse justify-content-end"
+				id="navbarTogglerHeader">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="#"
+							data-ng-if="vm.datos.fechas.actualTexto" data-ng-cloak>
+							<i class="fa fa-clock-o" aria-hidden="true"></i> <small>
+								{{vm.datos.fechas.actualTexto}}
+							</small>
+						</a></li>
+
+					<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#"
+							id="navbarDropdownMenuLink" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-user" aria-hidden="true"></i>
+							DOE&#32;JOHN
+						</a>
+						<div class="dropdown-menu dropdown-menu-right"
+							aria-labelledby="navbarDropdownMenuLink">
+
+							<a class="dropdown-item" href="/eset/logout">
+								<i class="fa fa-sign-out" aria-hidden="true"></i> Salir
+							</a>
+						</div></li>
+				</ul>
+			</div>
+		</nav>
+
+	</div>
+</div>
+
+			</header>
+			<div data-growl></div>
+
+			<div class="contenido contenido-scroll-nav">
+				<div class="container-fluid" data-mgtu-prevenir-clic-multiple>
+
+
+
+
+
+
+
+
+
+
+
+
+
+						<div class="row ">
+							<div
+								class="col-12 col-sm-10 col-xl-8 ml-auto mr-auto bg-trans-light top-container">
+								<h1>
+									Presentar Declaración
+								</h1>
+							</div>
+							<div
+								class="col-12 col-sm-10 col-xl-8 ml-auto mr-auto bg-light bot-container clearfix pt-0 pb-0">
+
+								<div>
+									<div>
+			<div data-ng-controller="IdentificarController as vm"
+				data-ng-init="vm.inicio('/eset','','01/02/2026')">
+				<div class="container myrow-container">
+					<div class="panel" data-ng-cloak>
+						<form novalidate="novalidate" autocomplete="off"
+							data-ng-submit="vm.procesar()">
+							<div class="row">
+								<div class="col-12 form-group" data-ng-if="">
+									<label for="fechaPresentacion">Fecha Presentación</label>
+									<div class="input-group" data-start-view="month"  moment-picker="vm.datos.fechaPresentacion" locale="es" today="true" format="DD/MM/YYYY"> <input class="form-control" placeholder="Elegir Fecha" data-ng-model="vm.datos.fechaPresentacion" data-ng-model-options="{ updateOn: 'blur' }" data-ng-model="vm.datos.fechaPresentacion" id="fechaPresentacion" required="required"  class = "form-control" ></input><div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar-o"></i></span></div></div>
+								</div>
+								<div class="col-6 form-group">
+									<label for="ruc">RUC</label>
+									<div class="input-group"><input type="text" value="8765432" name="ruc" data-ng-model = "vm.datos.ruc"data-ng-init = "vm.datos.ruc='8765432'"data-ng-model="vm.datos.ruc" readonly="readonly" data-mgtu-mayusculas="true" data-ng-change="vm.existeContribuyente()" data-ng-model-options="{updateOn: 'blur'}" required="required" mgtu-valor-constante mgtu-verifica-ruc  class = "form-control" ></input><div class="input-group-append"><span class="input-group-text"><i class="fa fa-user"></i></span></div></div>
+								</div>
+								<div class="col-3 form-group">
+									<label for="dv">DV</label>
+									<div class="input-group"><input type="text" value="6" name="dv" data-ng-model = "vm.datos.dv"data-ng-init = "vm.datos.dv='7'"data-ng-model="vm.datos.dv" readonly="readonly" maxlength="1" data-ng-change="vm.existeContribuyente()" data-ng-model-options="{updateOn: 'blur'}" required="required" mgtu-valor-inicial  class = "form-control" ></input><div class="input-group-append"><span class="input-group-text"><i class="fa fa-user"></i></span></div></div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 form-group">
+									<label for="obligacion">Obligación</label>
+									<select name="obligacion"data-ng-model = "vm.datos.obligacion"data-ng-change="vm.seleccionObligacion()" data-ng-model="vm.datos.obligacion" data-mgtu-opciones="vm.param.obligaciones" required="required" data-mgtu-incluir-texto-seleccion  class = "form-control custom-select" ><option value=""></option><option value="{{item.valor}}" data-ng-repeat="item in vm.param.obligaciones">{{item.texto}}</option></select>
+								</div>
+							</div>
+							<div class="row" data-ng-if="vm.datos.obligacion">
+								<div class="col-12 form-group">
+									<label for="periodicidad">Periodo</label>
+									<select name="periodicidad"data-ng-model = "vm.datos.periodicidad"data-ng-change="vm.seleccionPeriodicidad()" data-ng-model="vm.datos.periodicidad" data-mgtu-opciones="vm.param.periodicidades" required="required" data-mgtu-incluir-texto-seleccion  class = "form-control custom-select" ><option value=""></option><option value="{{item.valor}}" data-ng-repeat="item in vm.param.periodicidades">{{item.texto}}</option></select>
+								</div>
+							</div>
+							<section id="periodo" data-ng-if="vm.datos.periodicidad != null">
+
+								<div class="row">
+									<div class="col-4 form-group"
+										data-ng-if="vm.estado.periodicidad.eligeAnio">
+
+										<label for="anio">Año</label>
+										<select name="anio"data-ng-model = "vm.datos.anio"data-ng-change="vm.modificaPeriodo()" data-ng-model="vm.datos.anio" data-mgtu-opciones="vm.param.anios" required="required" data-mgtu-incluir-texto-seleccion  class = "form-control custom-select" ><option value=""></option><option value="{{item.valor}}" data-ng-repeat="item in vm.param.anios">{{item.texto}}</option></select>
+									</div>
+									<div class="col-4 form-group"
+										data-ng-if="vm.estado.periodicidad.eligeMes">
+
+										<label for="mes">Mes</label>
+										<select name="anio"data-ng-model = "vm.datos.mes"data-ng-change="vm.actualizarSemanas()" data-ng-model="vm.datos.mes" data-mgtu-opciones="vm.param.meses" required="required" data-mgtu-incluir-texto-seleccion  class = "form-control custom-select" ><option value=""></option><option value="{{item.valor}}" data-ng-repeat="item in vm.param.meses">{{item.texto}}</option></select>
+									</div>
+									<div class="col-4 form-group"
+										data-ng-if="vm.estado.periodicidad.eligeSemana">
+
+										<label for="semana">Semana</label>
+										<select name="anio"data-ng-model = "vm.datos.semana"data-ng-change="vm.modificaPeriodo()" data-ng-model="vm.datos.semana" data-mgtu-opciones="vm.param.semanas" required="required" data-mgtu-incluir-texto-seleccion  class = "form-control custom-select" ><option value=""></option><option value="{{item.valor}}" data-ng-repeat="item in vm.param.semanas">{{item.texto}}</option></select>
+									</div>
+									<div class="col-4 form-group"
+										data-ng-if="vm.estado.periodicidad.eligeFecha">
+
+										<label for="semana">Fecha Período</label>
+										<div class="input-group" data-start-view="month"  moment-picker="vm.datos.fecha" locale="es" today="true" format="DD/MM/YYYY"change = vm.modificaPeriodo() > <input class="form-control" placeholder="Elegir Fecha" data-ng-model="vm.datos.fecha" data-ng-model-options="{ updateOn: 'blur' }" data-ng-change="vm.modificaPeriodo()" data-ng-model="vm.datos.fecha" required="required"  class = "form-control" ></input><div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar-o"></i></span></div></div>
+									</div>
+								</div>
+							</section>
+							<section>
+
+								<div data-ng-if="vm.datos.periodo">
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group">
+												<label for="formulario">Formulario</label>
+												<select name="anio"data-ng-model = "vm.datos.formulario"data-ng-model="vm.datos.formulario" data-ng-if="vm.param.formularios.length > 1" data-mgtu-opciones="vm.param.formularios" required="required" data-mgtu-incluir-texto-seleccion  class = "form-control custom-select" ><option value=""></option><option value="{{item.valor}}" data-ng-repeat="item in vm.param.formularios">{{item.texto}}</option></select>
+												<input type="text" name="formularioNombre" data-ng-model = "vm.datos.formulario_"data-ng-model="vm.datos.formulario_" readonly="readonly" data-ng-if="vm.param.formularios.length === 1" required="required" data-mgtu-mayusculas="true"  class = "form-control etiqueta" ></input>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<br />
+
+							<div class="form-group">
+								<div class="btn-toolbar justify-content-between" role="toolbar"
+									aria-label="Opciones">
+									<div class="btn-group" role="group"
+										aria-label="Opciones Secundarias"></div>
+									<button type="submit" name="presentar"data-ng-if="!vm.estado.modo || (vm.estado.modo == 'edicion' || vm.estado.modo == 'nuevo')"  class = "btn-primary btn" ><span class=ItemBotonActualizar></span><i class="fa fa-check"></i>Abrir Declaración</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+								</div>
+							</div>
+						</div>
+
+
+				</div>
+			</div>
+
+
+
+<style>
+footer {
+	font-size: .8rem;
+	color: gray;
+}
+
+footer h4 {
+	font-size: .9rem;
+}
+
+footer ul>li {
+	color: gray;
+}
+
+footer a {
+	color: gray;
+}
+</style>
+<footer class="footer bg-dark pt-3 pb-1 mt-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-6 col-md-4 col-lg-5">
+				<h4>Dirección Nacional de Ingresos Tributarios</h4>
+				<ul>
+					<li>Yegros esq Mcal. Lopez</li>
+					<li>Horario de Atención: de 08:30 a 13:00hs</li>
+				</ul>
+			</div>
+			<div class="col-6 col-md-5 col-lg-5">
+				<h4>Contacto</h4>
+				<ul>
+					<li>Call Center (021) 729 7000</li>
+					<li><a
+							href="http://www.set.gov.py/portal/PARAGUAY-SET/Home/Contacte"
+							target="_blank">Oficinas</a></li>
+					<li><a
+							href="http://www.set.gov.py/portal/PARAGUAY-SET/Biblioteca?folder-id=repository:collaboration:/sites/PARAGUAY-SET/categories/SET/biblioteca-virtual/preguntas-frecuentes"
+							target="_blank">Preguntas Frecuentes</a></li>
+					<li><a href="https://servicios.set.gov.py/eset-publico/EnvioMailSetIService.do"
+							target="_blank">Asistencia Técnica</a></li>
+				</ul>
+			</div>
+			<div class="col-12 col-md-3 col-lg-2">
+				<div class="row">
+					<div class="col-12 d-flex justify-content-between">
+						<span><a href="https://x.com/dnitpy"
+								title="X" target="_blank" class="text-light">
+								<i class="fa fa-twitter fa-2x"></i>
+							</a></span> <span><a
+								href="https://www.instagram.com/tributacionpy/"
+								title="Instagram" target="_blank" class="text-light">
+								<i class="fa fa-instagram fa-2x"></i>
+							</a></span> <span><a
+								href="https://www.youtube.com/@DNITpy"
+								title="Youtube" target="_blank" class="text-light">
+								<i class="fa fa-youtube fa-2x"></i>
+							</a></span>
+					</div>
+				</div>
+				<div class="row mt-4">
+					<div class="col-12">
+						<button type="button" class="btn btn-sm btn-danger btn-block"
+							onclick="window.close()">
+							<i class="fa fa-close"></i> Cerrar Ventana
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr />
+		<div class="row">
+			<div class="col-12">
+				<small class="text-muted">Marangatu 2.2.132.6</small>
+			</div>
+		</div>
+	</div>
+</footer>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/eset/js/pa/angular/angular-locale_es-es.js"></script>
+<script
+	src="/eset/js/libs/jquery/jquery.min.js?version=2.2.132.6"></script>
+<script
+	src="/eset/js/libs/angular/angular.min.js?version=2.2.132.6"></script>
+<script
+	src="/eset/js/libs/angular/angular-locale_es-py.js?version=2.2.132.6"></script>
+<script
+	src="/eset/js/libs/angular-animate/angular-animate.min.js?version=2.2.132.6"></script>
+
+
+
+
+
+		<script src="/eset/js/libs/popper/popper.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/bootstrap/bootstrap.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/moment/moment.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/moment/es.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/angular-sanitize/angular-sanitize.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/ng-dialog/ngDialog.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/ng-file-upload/ng-file-upload-all.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/base.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/fw/service/mgtu-services.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/ru/service/mgtu-registro.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/fw/directive/mgtu-directives.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/fw/controller/topbar.js?version=2.2.132.6"></script>
+
+
+
+
+
+<!-- scripts -->
+
+
+
+		<script src="/eset/js/bd/declaracion/presentacion/identificar.js?version=2.2.132.6"></script>
+
+
+
+
+<script type="text/javascript">
+	angular.module('marangatu').constant('mgtuConfig', {
+		baseUrl : '/eset'
+	});
+</script>
+
+
+
+</body>
+</html>
+<script id="f5_cspm">(function(){var f5_cspm={f5_p:'IMNNEJKAPBGMMJAAIHEIBGPJKCEIDIPGJKMGLBFCKMOHCIPGPLAIGDPDFMPNFICNAMMBGPPPAAPGBJEPNHIAOFLPAAKMPDEDDKNHEOIPKKILMIAAMHMALJEHEMFPCNCB',setCharAt:function(str,index,chr){if(index>str.length-1)return str;return str.substr(0,index)+chr+str.substr(index+1);},get_byte:function(str,i){var s=(i/16)|0;i=(i&15);s=s*32;return((str.charCodeAt(i+16+s)-65)<<4)|(str.charCodeAt(i+s)-65);},set_byte:function(str,i,b){var s=(i/16)|0;i=(i&15);s=s*32;str=f5_cspm.setCharAt(str,(i+16+s),String.fromCharCode((b>>4)+65));str=f5_cspm.setCharAt(str,(i+s),String.fromCharCode((b&15)+65));return str;},set_latency:function(str,latency){latency=latency&0xffff;str=f5_cspm.set_byte(str,40,(latency>>8));str=f5_cspm.set_byte(str,41,(latency&0xff));str=f5_cspm.set_byte(str,35,2);return str;},wait_perf_data:function(){try{var wp=window.performance.timing;if(wp.loadEventEnd>0){var res=wp.loadEventEnd-wp.navigationStart;if(res<60001){var cookie_val=f5_cspm.set_latency(f5_cspm.f5_p,res);window.document.cookie='f5avr1479781364aaaaaaaaaaaaaaaa_cspm_='+encodeURIComponent(cookie_val)+';path=/;'+'';}
+return;}}
+catch(err){return;}
+setTimeout(f5_cspm.wait_perf_data,100);return;},go:function(){var chunk=window.document.cookie.split(/\s*;\s*/);for(var i=0;i<chunk.length;++i){var pair=chunk[i].split(/\s*=\s*/);if(pair[0]=='f5_cspm'&&pair[1]=='1234')
+{var d=new Date();d.setTime(d.getTime()-1000);window.document.cookie='f5_cspm=;expires='+d.toUTCString()+';path=/;'+';';setTimeout(f5_cspm.wait_perf_data,100);}}}}
+f5_cspm.go();}());</script>

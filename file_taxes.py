@@ -123,7 +123,7 @@ def attempt_captcha_solve(config: Config, http: HTTPClient, url_base: str, url_h
         )
         return None
 
-    with AnimatedWaitContext('Captcha solved! Retrying login', config.is_verbose):
+    with AnimatedWaitContext('Captcha solved! Retrying login', config.is_verbose, config.mockup_mode):
         # Retry login with captcha solution
         login_data['g-recaptcha-response'] = captcha_solution
         return http.post_login(f'{url_base}/authenticate', login_data)
@@ -143,7 +143,7 @@ def perform_login(http: HTTPClient, config: Config, url_base: str, url_host: str
     Returns:
         True if login succeeded, False otherwise
     """
-    with AnimatedWaitContext('Logging in', config.is_verbose):
+    with AnimatedWaitContext('Logging in', config.is_verbose, config.mockup_mode):
         login_data = {
             'usuario': config.username,
             'clave': config.password,
@@ -188,7 +188,7 @@ def check_session(http: HTTPClient, config: Config, url_base: str, url_host: str
     Returns:
         True if logged in (or successfully logged in), False otherwise
     """
-    with AnimatedWaitContext('Checking session', config.is_verbose):
+    with AnimatedWaitContext('Checking session', config.is_verbose, config.mockup_mode):
         home_page = http.get(url_base)
 
     if '/eset/logout' in home_page:
@@ -237,6 +237,8 @@ def main() -> int:
         verify_ssl=config.verify_ssl,
         verbose=config.is_verbose,
         debug=config.is_debug,
+        mockup_mode=config.mockup_mode,
+        mockup_dir=config.mockup_dir,
     )
 
     # URLs
@@ -256,7 +258,7 @@ def main() -> int:
     import urllib.parse
     token_encoded = urllib.parse.quote(token)
 
-    with AnimatedWaitContext('Fetching profile information', config.is_verbose):
+    with AnimatedWaitContext('Fetching profile information', config.is_verbose, config.mockup_mode):
         profile_response = http.get(f'{URL_BASE}/{METHOD_PROFILE}?t3={token_encoded}')
 
     try:
@@ -279,7 +281,7 @@ def main() -> int:
     print(f'Welcome {first_name}!')
 
     # Check profile info changes
-    with AnimatedWaitContext('Checking profile info changes', config.is_verbose):
+    with AnimatedWaitContext('Checking profile info changes', config.is_verbose, config.mockup_mode):
         check_profile_response = http.get(f'{URL_BASE}/{METHOD_CHECK_PROFILE}?t3={token_encoded}')
 
     try:
@@ -321,7 +323,7 @@ def main() -> int:
         print('No pending profile actions')
 
     # Check pending forms
-    with AnimatedWaitContext('Checking pending forms', config.is_verbose):
+    with AnimatedWaitContext('Checking pending forms', config.is_verbose, config.mockup_mode):
         pending_response = http.get(f'{URL_BASE}/{METHOD_PENDING}?t3={token_encoded}')
 
     try:
@@ -331,7 +333,7 @@ def main() -> int:
 
     if pending_forms:
         # Get menu items
-        with AnimatedWaitContext('Fetching menu items', config.is_verbose):
+        with AnimatedWaitContext('Fetching menu items', config.is_verbose, config.mockup_mode):
             menu_response = http.get(f'{URL_BASE}/{METHOD_MENU}?t3={token_encoded}')
 
         try:

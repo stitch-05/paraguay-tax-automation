@@ -12,16 +12,18 @@ T = TypeVar('T')
 class AnimatedWaitContext:
     """Context manager for animated waiting during operations."""
 
-    def __init__(self, message: str, verbose: bool = True):
+    def __init__(self, message: str, verbose: bool = True, mockup_mode: bool = False):
         """
         Initialize animated wait context.
 
         Args:
             message: Message to display with animation
             verbose: Whether to show the animation (message always shows)
+            mockup_mode: If True, skip actual sleeping but keep displaying seconds
         """
         self.message = message
         self.verbose = verbose
+        self.mockup_mode = mockup_mode
         self.sleep_time = random.randint(1, 4)  # Random wait time like animated_wait
         self._stop_event = threading.Event()
         self._thread: Optional[threading.Thread] = None
@@ -46,14 +48,22 @@ class AnimatedWaitContext:
         """Start the animation."""
         # Record start time and start animation thread immediately
         self._start_time = time.time()
-        self._stop_event.clear()
-        self._thread = threading.Thread(target=self._animate, daemon=True)
-        self._thread.start()
+
+        # In mockup mode, don't print anything - let HTTP client print MOCKUP line first
+        if self.mockup_mode:
+            pass  # Message will be printed in __exit__
+        else:
+            self._stop_event.clear()
+            self._thread = threading.Thread(target=self._animate, daemon=True)
+            self._thread.start()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Stop the animation."""
-        if self._thread and self._start_time:
+        if self.mockup_mode:
+            # In mockup mode, print message and checkmark together
+            print(f'{self.message}... ✓')
+        elif self._thread and self._start_time:
             # Calculate elapsed time and sleep for the remainder
             elapsed = time.time() - self._start_time
             remaining = max(0, self.sleep_time - elapsed)

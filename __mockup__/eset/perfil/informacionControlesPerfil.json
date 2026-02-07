@@ -1,0 +1,11 @@
+{
+  "etiqueta": "Registro",
+  "mostrarMensaje": false,
+  "mostrarAlerta": false,
+  "bloquearMenu": false,
+  "textoMensaje": null,
+  "textoAlerta": null,
+  "vinculos": [],
+  "controles": [],
+  "debeActualizar": false
+}
