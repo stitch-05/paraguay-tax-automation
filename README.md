@@ -97,13 +97,29 @@ python file_taxes.py -d    # debug
 
 ### Run automatically via cron
 
-Add to your crontab (edit with `crontab -e`):
+Add a cron job to run the script at your desired schedule. For example, to run it every day at 3:00 AM:
+
+#### Using Poetry
 
 ```cron
-0 6 1 * * /path/to/paraguay-tax-automation/venv/bin/python /path/to/paraguay-tax-automation/file_taxes.py >/dev/null 2>&1
+0 3 * * * cd /path/to/paraguay-tax-automation && /path/to/poetry run python file_taxes.py >/dev/null 2>&1
 ```
 
-This will run the script on the 1st of every month at 6 AM.
+#### Using venv
+
+```cron
+0 3 * * * /path/to/paraguay-tax-automation/venv/bin/python /path/to/paraguay-tax-automation/file_taxes.py >/dev/null 2>&1
+```
+
+Adjust the paths and schedule as needed.
+
+To find the poetry path, run `which poetry` in your terminal.
+
+To log output to a file instead of discarding it, replace `>/dev/null 2>&1` with `>> /path/to/logfile.log 2>&1` e.g.:
+
+```cron
+0 3 * * * cd /path/to/paraguay-tax-automation && /path/to/poetry run python file_taxes.py >> /home/<user>/taxes.log 2>&1
+```
 
 ## Requirements
 
