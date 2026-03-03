@@ -92,8 +92,8 @@ class Form211Handler(FormHandler):
                 if not name:
                     continue
 
-                # Skip certain fields
-                if name in ('C2', 'C3'):
+                # Skip certain fields (including _cyp which is always from URL, not form input)
+                if name in ('C2', 'C3', '_cyp'):
                     continue
 
                 # Handle special cases

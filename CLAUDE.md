@@ -18,6 +18,12 @@ python file_taxes.py -v              # verbose
 python file_taxes.py -d              # debug
 python file_taxes.py -u USER -p PASS # override credentials
 python file_taxes.py -ca API_KEY     # use Capsolver for captcha
+python file_taxes.py --mockup        # test with mock data (no real server)
+
+# Testing & Pre-Commit
+python -m pytest tests/ -v           # run all tests
+python -m pytest tests/test_form_211.py -v  # run specific test file
+./.git/hooks/pre-commit              # manually test pre-commit hook
 
 # Installation
 ./install.sh                         # creates venv or uses Poetry
@@ -26,7 +32,9 @@ python file_taxes.py -ca API_KEY     # use Capsolver for captcha
 ## Architecture
 
 ### Entry Point
+
 `file_taxes.py` orchestrates the workflow:
+
 1. Load config (CLI args > .env.local > .env)
 2. Initialize HTTP client with cookie persistence
 3. Check session / perform login (handles captcha)
@@ -36,6 +44,7 @@ python file_taxes.py -ca API_KEY     # use Capsolver for captcha
 7. Send notifications on success/failure
 
 ### Plugin System
+
 Form handlers follow a registry pattern in `forms/__init__.py`:
 
 ```python
@@ -46,6 +55,7 @@ PROFILE_HANDLERS = {'registro_de_contribuyentes': RegistroHandler, ...}
 All handlers inherit from `FormHandler` base class in `forms/base.py`.
 
 ### Key Modules
+
 - `config.py` - Config loading with shell-style .env parsing
 - `http_client.py` - Stateful HTTP client with cookies, user-agent rotation, random delays
 - `crypto.py` - AES-128-CBC encryption for API tokens (hardcoded key/IV from original Bash impl)
@@ -53,9 +63,11 @@ All handlers inherit from `FormHandler` base class in `forms/base.py`.
 - `notifications.py` - Pushover/Signal/Email notifiers with factory pattern
 
 ### API Token Encryption
+
 Requests use encrypted `t3` parameter: JSON → AES-128-CBC → base64 → URL encode. The key/IV in `crypto.py` are hardcoded and must not be changed.
 
 ### HTTP Client Behavior
+
 - Cookies persisted to `cookies.txt` (Mozilla format)
 - Random user-agent from `user-agents.txt` on each request
 - 1-4 second random delays between requests
@@ -64,8 +76,12 @@ Requests use encrypted `t3` parameter: JSON → AES-128-CBC → base64 → URL e
 ## Adding New Form Handlers
 
 1. Create handler class in `forms/form_XXX.py` inheriting from `FormHandler`
-2. Implement `process(period)` method
-3. Register in `forms/__init__.py` FORM_HANDLERS dict with tax code as key
+2. Implement `process(period_or_link: str) -> bool` method with `AnimatedWaitContext` around network calls
+3. Use `self.get_menu_url(...)`, validate page text, call encrypted endpoints, parse responses
+4. Handle errors with `debug_error_detail(...)` and notify with `self.send_message(...)`
+5. Register in `forms/__init__.py` FORM_HANDLERS dict with tax code as key
+
+Examples: `forms/form_211.py` (simple encrypted endpoint + HTML parsing) and `forms/registro.py` (multi-step workflow)
 
 ## Configuration
 
@@ -74,6 +90,13 @@ Required env vars: `USERNAME`, `PASSWORD` (Marangatu credentials)
 Optional: `CAPSOLVER_API_KEY`, `NOTIFICATION_SERVICE` (pushover|signal|email), notification-specific vars
 
 See `.env.example` for all options.
+
+## Testing & Debugging
+
+- **Mockup mode**: `--mockup` redirects HTTP reads to `__mockup__/` directory; see `__mockup__/README.md` for layout
+- **Debug mode**: `--debug` logs request URLs and payload snippets for troubleshooting
+- **Pre-commit hook**: `.git/hooks/pre-commit` runs all tests before each commit; blocks commit if tests fail
+- **Session issues**: Check `cookies.txt` (Mozilla format) and test with `--mockup -v` to isolate portal vs. parsing problems
 
 ## Limitations
 

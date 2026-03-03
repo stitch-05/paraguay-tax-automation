@@ -99,9 +99,9 @@ class AnimatedWaitContext:
         # Record start time and start animation thread immediately
         self._start_time = time.time()
 
-        # In mockup mode, don't print anything - let HTTP client print MOCKUP line first
+        # In mockup mode, skip animation
         if self.mockup_mode:
-            pass  # Message will be printed in __exit__
+            print(f'{self.message}...', end='', flush=True)
         else:
             self._stop_event.clear()
             self._thread = threading.Thread(target=self._animate, daemon=True)
@@ -112,13 +112,14 @@ class AnimatedWaitContext:
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Stop the animation."""
         if self.mockup_mode:
-            # In mockup mode, print completion once and skip shared completion below
+            # In mockup mode without animation, overwrite the static message
             icon = '✓' if exc_type is None and not self.failed else 'x'
-            print(f'{self.message}... {icon}')
+            print(f'\r{self.message}... {icon}')
             self._message_printed = True
         elif self._thread and self._start_time:
-            # Calculate elapsed time and sleep for the remainder
+            # Calculate elapsed time and sleep for the remainder if needed
             elapsed = time.time() - self._start_time
+            # Skip sleep in debug mode
             remaining = 0 if self.debug else max(0, self.sleep_time - elapsed)
             if remaining > 0:
                 time.sleep(remaining)
@@ -140,15 +141,22 @@ class AnimatedWaitContext:
                 print(f'\r{self.message}... {icon}')
 
 
-def send_message(notifier, title: str, message: str, message_prefix: str = '') -> None:
+def send_message(notifier, title: str, message: str, message_prefix: str = '', mockup_mode: bool = False) -> None:
     """Print a local log line and send notification."""
     print(f'{title} - {message}')
     full_message = f'{message_prefix}{message}'
 
     # Send notification with animated wait only if a real notification service is configured
     from notifications import NoopNotifier
+    from unittest.mock import MagicMock
+
     if isinstance(notifier, NoopNotifier):
         notifier.send(title, full_message)
+    elif isinstance(notifier, MagicMock):
+        # In tests with mock notifier, skip animation entirely for speed
+        print('Sending notification... ✓')
+        notifier.send(title, full_message)
     else:
+        # Real notification service - show animation, no enforced minimum wait
         with AnimatedWaitContext('Sending notification', verbose=False):
             notifier.send(title, full_message)

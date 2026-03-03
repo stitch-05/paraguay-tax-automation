@@ -77,7 +77,7 @@ class FormHandler(ABC):
 
     def send_message(self, title: str, message: str) -> None:
         """Send a notification message."""
-        notify(self.notifier, title, message, self.config.message_prefix)
+        notify(self.notifier, title, message, self.config.message_prefix, self.config.mockup_mode)
 
     def debug_error_detail(self, context: str, error: Exception, response_text: str) -> None:
         """Print detailed error context to console only when debug is enabled."""

@@ -17,22 +17,26 @@
 ## Handler Pattern (Project Convention)
 
 - Implement new handlers in `forms/form_XXX.py` (tax) or `forms/<feature>.py` (profile), subclassing `FormHandler`.
-- Implement `process(period_or_link: str) -> bool` and use `AnimatedWaitContext` around network phases.
-- Read menu URL via `self.get_menu_url(...)`, validate expected page text, call encrypted endpoints, parse JSON, then notify via `self.send_message(...)`.
-- Register handler in `forms/__init__.py`; routing is key-based (`'211'`, `'955'`, `'registro_de_contribuyentes'`, etc.).
-- Follow existing examples: `forms/form_211.py` (HTML input parsing + submit) and `forms/registro.py` (multi-step recover/verify/save/document accept).
+- Implement `process(period_or_link: str) -> bool` and use `AnimatedWaitContext` around network phases (with `.config.is_verbose`, `.config.is_debug`, `.config.mockup_mode`).
+- Typical handler flow: get menu URL → validate page text → call encrypted endpoint → parse JSON → handle errors with `debug_error_detail(...)` → notify with `self.send_message(...)`.
+- Register handler in `forms/__init__.py` (`FORM_HANDLERS` for tax forms, `PROFILE_HANDLERS` for profile updates); routing is key-based (`'211'`, `'955'`, `'registro_de_contribuyentes'`, etc.).
+- Reuse `InputParser` for form input extraction and `DivAttributeParser` for Angular ng-init data extraction (see `forms/base.py`).
+- Follow existing examples: `forms/form_211.py` (simple encrypted endpoint + HTML form parsing) and `forms/registro.py` (multi-step workflow with recovery/verify/save).
 
 ## Dev Workflows
 
 - Install: `./install.sh` (Poetry if present, otherwise `venv` + `requirements.txt`).
 - Run: `poetry run python file_taxes.py` or `./venv/bin/python file_taxes.py`.
 - Useful flags: `--mockup`, `-v/--verbose`, `-d/--debug`, `-u/-p`, `-nc` (NopeCHA), `-ca` (Capsolver), `--no-verify-ssl`.
+- Tests: `python -m pytest tests/ -v`; target a file with `python -m pytest tests/test_form_211.py -v`.
+- **Pre-commit hook**: `.git/hooks/pre-commit` automatically runs all tests before each commit and blocks if tests fail; test coverage info in `tests/README.md`.
 
 ## Mockup and Debugging
 
-- `--mockup` redirects HTTP reads to `__mockup__/` with URL-path mirroring (tries `.json`, `.html`, then index files); query params are ignored for file lookup.
-- Use `--debug` to inspect request URLs/payload snippets and parser failures; handlers call `debug_error_detail(...)` for extra context.
-- For session issues, check `cookies.txt` behavior before changing login logic.
+- `--mockup` mode redirects HTTP reads to `__mockup__/` with URL-path mirroring; file lookup tries `.json`, `.html`, then index files (query params ignored); see `__mockup__/README.md` for layout.
+- Use `--debug` to inspect request URLs, payload snippets, and parser failures; handlers call `debug_error_detail(...)` for structured error logging.
+- Pre-commit hook automatically validates code before commits; run `./.git/hooks/pre-commit` manually to test locally before committing.
+- For session/login issues, check `cookies.txt` (Mozilla format, persistent) and test with `--mockup -v` first to isolate portal vs. parsing issues.
 
 ## Integration Notes
 

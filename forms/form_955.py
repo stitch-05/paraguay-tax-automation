@@ -96,7 +96,7 @@ class Form955Handler(FormHandler):
 
         status = result.get('exito')
 
-        if status is None:
+        if status is not True:
             self.send_message('Error', f'Filing receipt form {self.FORM}')
             return False
 

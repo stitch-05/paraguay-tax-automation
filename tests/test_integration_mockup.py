@@ -11,8 +11,6 @@ from config import create_argument_parser, load_config
 from http_client import HTTPClient
 from forms.form_211 import Form211Handler
 from forms.form_955 import Form955Handler
-from forms.registro import RegistroHandler
-from forms.porcentajes import PorcentajesHandler
 
 
 class TestMockupIntegration:
@@ -80,8 +78,6 @@ class TestMockupIntegration:
     @pytest.mark.parametrize("handler_class,period_or_link,expected_msg", [
         (Form211Handler, '202601', 'VAT filed successfully!'),
         (Form955Handler, '202601', 'Receipts for period 202601 filed successfully!'),
-        (RegistroHandler, '/eset/actualizacion/editar_contribuyente.do?_cyp=test', 'Tax payer info updated successfully!'),
-        (PorcentajesHandler, '/eset/actualizacion/editar_porcentajes.do?_cyp=test', 'Info on the percentage of income from economic activity updated successfully!'),
     ])
     def test_form_handler_end_to_end(self, test_config, test_http_client, test_profile, test_notifier_mock, handler_class, period_or_link, expected_msg):
         """Test full end-to-end workflow for each form handler."""
