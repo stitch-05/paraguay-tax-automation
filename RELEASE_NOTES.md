@@ -4,6 +4,8 @@
 
 ### Features
 
+- [`b9315699`](https://github.com/stitch-05/paraguay-tax-automation/commit/b9315699ac38635e1dd9a52834fd0340419c3102): Improve CI workflow with refined path filters and concurrency controls.
+- [`bd65da85`](https://github.com/stitch-05/paraguay-tax-automation/commit/bd65da85bdff6ac8e9f4062fd11337ee6a55a758): Add Git hooks and CI configuration to run automated tests consistently.
 - [`58c4d6cc`](https://github.com/stitch-05/paraguay-tax-automation/commit/58c4d6cc80031426467b019736da6d0a81ae0302): Add pip fallback support and improve dependency management in installation and update scripts.
 - [`832ce48d`](https://github.com/stitch-05/paraguay-tax-automation/commit/832ce48db070be0b753196c63773621065aad572): Add development-mode install/update support and improve setup documentation.
 - [`51b8f424`](https://github.com/stitch-05/paraguay-tax-automation/commit/51b8f424b2b2d22242776bb855cab9675bc9197f): Add update script to automate pulling latest changes and updating dependencies.
