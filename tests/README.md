@@ -2,6 +2,22 @@
 
 This directory contains the pytest test suite for the Paraguay tax automation project.
 
+## Prerequisites
+
+To run tests, you need to install development dependencies:
+
+```bash
+./install.sh --dev
+```
+
+Or if you already have the environment set up:
+
+```bash
+./update.sh --dev
+```
+
+This installs `pytest` and `pytest-cov` from `requirements-dev.txt` (or Poetry dev dependencies).
+
 ## Quick Start
 
 ### Run All Tests

@@ -28,8 +28,6 @@ To update to the latest version and refresh dependencies:
 ./update.sh
 ```
 
-This will pull the latest changes from git and update your dependencies.
-
 ## Configuration
 
 Edit `.env` and add your Marangatu credentials:
@@ -94,9 +92,6 @@ python file_taxes.py --help
 # Override credentials
 python file_taxes.py -u USERNAME -p PASSWORD
 
-# Use mockup data for testing (no real server requests)
-python file_taxes.py --mockup -v
-
 # Use NopeCHA with API key (higher limits than free tier)
 python file_taxes.py -nc YOUR_NOPECHA_API_KEY
 
@@ -107,23 +102,6 @@ python file_taxes.py -ca YOUR_CAPSOLVER_API_KEY
 python file_taxes.py -v    # verbose
 python file_taxes.py -d    # debug
 ```
-
-### Mockup Mode for Development
-
-For development and testing without making real server requests:
-
-```bash
-python file_taxes.py --mockup --verbose
-```
-
-In mockup mode, the HTTP client reads responses from local files in the `__mockup__/` directory instead of making network requests. This is useful for:
-
-- Offline development and testing
-- Avoiding rate limits during development
-- Examining server response structures
-- Testing error handling
-
-See [`__mockup__/README.md`](__mockup__/README.md) for details on the directory structure and URL mapping.
 
 ### Run automatically via cron
 
@@ -154,12 +132,98 @@ To log output to a file instead of discarding it, replace `>/dev/null 2>&1` with
 ## Requirements
 
 - Python 3.8+
-- pycryptodome
+- pycryptodomex
 
 ## Known Limitations
 
 - Form 211 only supports 0 VAT filing
 - NopeCHA free tier allows 5 reCAPTCHA solves/day (enough for monthly tax filing)
+
+## Development
+
+This section contains information for developers who want to contribute, test, or modify the code.
+
+### Development Installation
+
+To install with development dependencies (includes pytest for running tests):
+
+```bash
+./install.sh --dev
+```
+
+This installs additional packages from `requirements-dev.txt` (or Poetry dev dependencies) needed for testing and development.
+
+### Updating Development Environment
+
+To update to the latest version with development dependencies:
+
+```bash
+./update.sh --dev
+```
+
+### Switching Between Modes
+
+When switching between dev and production installations, use the `--force` flag to recreate the environment:
+
+```bash
+# Switch from dev to production mode
+./install.sh --force
+
+# Switch from production to dev mode
+./install.sh --dev --force
+
+# Same for updates
+./update.sh --force          # switch to production
+./update.sh --dev --force    # switch to dev
+```
+
+The `--force` flag removes the existing environment before installing, ensuring a clean state.
+
+### Mockup Mode
+
+For development and testing without making real server requests:
+
+```bash
+python file_taxes.py --mockup --verbose
+```
+
+In mockup mode, the HTTP client reads responses from local files in the `__mockup__/` directory instead of making network requests. This is useful for:
+
+- Offline development and testing
+- Avoiding rate limits during development
+- Examining server response structures
+- Testing error handling
+
+See [`__mockup__/README.md`](__mockup__/README.md) for details on the directory structure and URL mapping.
+
+### Running Tests
+
+After installing with `--dev` flag:
+
+```bash
+# With Poetry
+poetry run python -m pytest tests/ -v
+
+# With venv
+source venv/bin/activate
+python -m pytest tests/ -v
+```
+
+See [`tests/README.md`](tests/README.md) for detailed testing documentation.
+
+### Project Structure
+
+- `file_taxes.py` - Main entry point
+- `forms/` - Form handler plugins (211, 955, registro, etc.)
+- `http_client.py` - HTTP client with session management
+- `config.py` - Configuration loader
+- `crypto.py` - AES encryption for API tokens
+- `captcha_solver.py` - Captcha solving integration
+- `notifications.py` - Notification service handlers
+- `tests/` - Test suite
+- `__mockup__/` - Mock data for testing
+
+See [`CLAUDE.md`](CLAUDE.md) for detailed architecture and development guidelines.
 
 ## License
 

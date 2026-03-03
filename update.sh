@@ -8,6 +8,16 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
+# Parse command line arguments
+INSTALL_DEV=false
+for arg in "$@"; do
+    case $arg in
+        --dev)
+            INSTALL_DEV=true
+            ;;
+    esac
+done
+
 echo "=== Paraguay Tax Automation - Update ==="
 echo ""
 
@@ -27,11 +37,23 @@ fi
 # Check if Poetry is available
 if command -v poetry &> /dev/null; then
     echo "Updating dependencies..."
-    poetry install
+    if [ "$INSTALL_DEV" = true ]; then
+        poetry install
+        echo "(Updated with dev dependencies)"
+    else
+        poetry install --only main
+        echo "(Updated without dev dependencies)"
+    fi
 elif [ -d "venv" ]; then
     echo "Updating dependencies..."
     ./venv/bin/pip install --upgrade pip -q
     ./venv/bin/pip install -r requirements.txt -q
+    if [ "$INSTALL_DEV" = true ]; then
+        ./venv/bin/pip install -r requirements-dev.txt -q
+        echo "(Updated with dev dependencies)"
+    else
+        echo "(Updated without dev dependencies)"
+    fi
 else
     echo "ERROR: No environment found."
     echo "Please run ./install.sh first to create the initial setup."
