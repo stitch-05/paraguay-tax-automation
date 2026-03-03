@@ -84,10 +84,7 @@ class Form955Handler(FormHandler):
             token_talon = self.encrypt_token(talon_data)
 
         with AnimatedWaitContext('Submitting receipt form', self.config.is_verbose):
-            process_response = self.http.post_json(
-                f'{self.url_base}/{self.METHOD_TALON}?t3={token_talon}',
-                {}
-            )
+            process_response = self.http.get(f'{self.url_base}/{self.METHOD_TALON}?t3={token_talon}')
 
         try:
             result = json.loads(process_response)
