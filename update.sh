@@ -27,7 +27,6 @@ fi
 # Check if Poetry is available
 if command -v poetry &> /dev/null; then
     echo "Updating dependencies..."
-    poetry lock --no-update
     poetry install
 elif [ -d "venv" ]; then
     echo "Updating dependencies..."
