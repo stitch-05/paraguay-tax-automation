@@ -1,5 +1,28 @@
 # Release Notes
 
+## March 2026
+
+### Features
+
+- [`b3309701`](https://github.com/stitch-05/paraguay-tax-automation/commit/b33097017b5f69f4d79dca0e2c1365599a7d5df8): Add comprehensive test suite for form handlers and improve notification handling.
+- [`d334b3c9`](https://github.com/stitch-05/paraguay-tax-automation/commit/d334b3c9423cbf9d3c30536afb2336981f2814a6): Add mockup mode support for testing and development without server access.
+- [`bce5b792`](https://github.com/stitch-05/paraguay-tax-automation/commit/bce5b792d9658e1b8a0a3009fdf744410492bd8d): Enhance AnimatedWaitContext with failure handling for robust operation tracking.
+- [`aefb3bfc`](https://github.com/stitch-05/paraguay-tax-automation/commit/aefb3bfcc203077b7c5a1506a36ed3c6a88b7a18): Add debug option to AnimatedWaitContext for improved logging during operations.
+
+### Bug Fixes
+
+- [`42932d3d`](https://github.com/stitch-05/paraguay-tax-automation/commit/42932d3de61cb1bbbc4ccf525a6d143382edad5a): Fix import statements for Cryptodome and update requirements for compatibility.
+- [`d351207e`](https://github.com/stitch-05/paraguay-tax-automation/commit/d351207e4e68e6a431b1e169c2619992825ea793): Change HTTP method from POST to GET for submitting receipt form in Form955Handler.
+- [`e7e9500a`](https://github.com/stitch-05/paraguay-tax-automation/commit/e7e9500ac6d8a6c40c4805414200bf2c332a5dc7): Improve completion message handling in mockup mode for clearer output.
+- [`ae10a948`](https://github.com/stitch-05/paraguay-tax-automation/commit/ae10a948b714f9e351c9d017b638cd282fe03e30): Conditionally use animated wait context for notification sending to reduce overhead.
+- [`6909b4b4`](https://github.com/stitch-05/paraguay-tax-automation/commit/6909b4b40307f2161b038da93417d9b875f99a36): Add detailed error logging for JSON decode failures in form handlers.
+
+### Documentation
+
+- [`428573f8`](https://github.com/stitch-05/paraguay-tax-automation/commit/428573f8ff8902055c60eef83726ae5102e36e6a): Update documentation structure and content in copilot instructions for better guidance.
+
+---
+
 ## February 2026
 
 ### Features
