@@ -12,6 +12,8 @@ T = TypeVar('T')
 class AnimatedWaitContext:
     """Context manager for animated waiting during operations."""
 
+    _context_stack = []
+
     def __init__(self, message: str, verbose: bool = True, debug: bool = False):
         """
         Initialize animated wait context.
@@ -28,6 +30,52 @@ class AnimatedWaitContext:
         self._stop_event = threading.Event()
         self._thread: Optional[threading.Thread] = None
         self._start_time: Optional[float] = None
+        self.failed = False
+        self._message_printed = False
+
+    def mark_failed(self):
+        """Mark this wait context as failed."""
+        self.failed = True
+
+    def suppress_completion_message(self):
+        """Suppress the completion message (error was already printed)."""
+        self._message_printed = True
+
+    def print_completion_now(self, failed: bool = True):
+        """Stop animation and print completion line immediately."""
+        if self._thread and not self._message_printed:
+            # Stop the animation thread
+            self._stop_event.set()
+            self._thread.join(timeout=0.1)
+
+            # Print completion line
+            icon = 'x' if failed else '✓'
+            if self.verbose:
+                print(f'\r{self.message} (waiting {self.sleep_time}s)... {icon}')
+            else:
+                print(f'\r{self.message}... {icon}')
+
+            # Mark as printed so __exit__ doesn't duplicate
+            self._message_printed = True
+            self.failed = failed
+
+    @classmethod
+    def mark_current_failed(cls):
+        """Mark the current active wait context as failed."""
+        if cls._context_stack:
+            cls._context_stack[-1].mark_failed()
+
+    @classmethod
+    def suppress_current_completion(cls):
+        """Suppress completion message for current context (error already printed)."""
+        if cls._context_stack:
+            cls._context_stack[-1].suppress_completion_message()
+
+    @classmethod
+    def print_current_completion(cls, failed: bool = True):
+        """Print completion line immediately for current context."""
+        if cls._context_stack:
+            cls._context_stack[-1].print_completion_now(failed)
 
     def _animate(self):
         """Run the animation in a background thread."""
@@ -51,6 +99,7 @@ class AnimatedWaitContext:
         self._stop_event.clear()
         self._thread = threading.Thread(target=self._animate, daemon=True)
         self._thread.start()
+        self.__class__._context_stack.append(self)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -64,8 +113,15 @@ class AnimatedWaitContext:
 
             self._stop_event.set()
             self._thread.join(timeout=0.1)
-            # Print final state with 3 dots and checkmark/X depending on success
-            icon = '✓' if exc_type is None else 'X'
+
+        if self.__class__._context_stack and self.__class__._context_stack[-1] is self:
+            self.__class__._context_stack.pop()
+        elif self in self.__class__._context_stack:
+            self.__class__._context_stack.remove(self)
+
+        # Only print completion message if not already printed
+        if not self._message_printed:
+            icon = '✓' if exc_type is None and not self.failed else 'x'
             if self.verbose:
                 print(f'\r{self.message} (waiting {self.sleep_time}s)... {icon}')
             else:

@@ -142,16 +142,30 @@ class HTTPClient:
                 self.save_cookies()
                 return content
         except urllib.error.HTTPError as e:
+            from utils import AnimatedWaitContext
+
             if self.verbose:
+                # Print completion line with 'x' first
+                AnimatedWaitContext.print_current_completion(failed=True)
+                # Then print the error
                 print(f'HTTP Error {e.code}: {e.reason}')
+            else:
+                AnimatedWaitContext.mark_current_failed()
             try:
                 content = e.read().decode('utf-8', errors='replace')
                 return content
             except Exception:
                 raise
         except urllib.error.URLError as e:
+            from utils import AnimatedWaitContext
+
             if self.verbose:
+                # Print completion line with 'x' first
+                AnimatedWaitContext.print_current_completion(failed=True)
+                # Then print the error
                 print(f'URL Error: {e.reason}')
+            else:
+                AnimatedWaitContext.mark_current_failed()
             raise
 
     def get(self, url: str, headers: Optional[dict] = None) -> str:
