@@ -112,8 +112,10 @@ class AnimatedWaitContext:
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Stop the animation."""
         if self.mockup_mode:
-            # In mockup mode, print message and checkmark together
-            print(f'{self.message}... ✓')
+            # In mockup mode, print completion once and skip shared completion below
+            icon = '✓' if exc_type is None and not self.failed else 'x'
+            print(f'{self.message}... {icon}')
+            self._message_printed = True
         elif self._thread and self._start_time:
             # Calculate elapsed time and sleep for the remainder
             elapsed = time.time() - self._start_time
