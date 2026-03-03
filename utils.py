@@ -143,6 +143,10 @@ def send_message(notifier, title: str, message: str, message_prefix: str = '') -
     print(f'{title} - {message}')
     full_message = f'{message_prefix}{message}'
 
-    # Send notification with animated wait
-    with AnimatedWaitContext('Sending notification', verbose=False):
+    # Send notification with animated wait only if a real notification service is configured
+    from notifications import NoopNotifier
+    if isinstance(notifier, NoopNotifier):
         notifier.send(title, full_message)
+    else:
+        with AnimatedWaitContext('Sending notification', verbose=False):
+            notifier.send(title, full_message)
