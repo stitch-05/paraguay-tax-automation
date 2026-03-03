@@ -42,6 +42,7 @@ class Config:
         self.verbose: bool = False
         self.debug: bool = False
         self.verify_ssl: bool = True
+        self.mockup_mode: bool = False
 
         # Working directory (same as the script)
         self.working_dir: Path = Path(__file__).parent
@@ -53,6 +54,10 @@ class Config:
     @property
     def user_agents_file(self) -> Path:
         return self.working_dir / 'user-agents.txt'
+
+    @property
+    def mockup_dir(self) -> Path:
+        return self.working_dir / '__mockup__'
 
     @property
     def env_file(self) -> Path:
@@ -193,6 +198,8 @@ def load_config(args: Optional[argparse.Namespace] = None) -> Config:
             config.verbose = True
     if 'VERIFY_SSL' in env_vars:
         config.verify_ssl = env_vars['VERIFY_SSL'].strip().lower() in ('1', 'true', 'yes', 'on')
+    if 'MOCKUP_MODE' in env_vars:
+        config.mockup_mode = env_vars['MOCKUP_MODE'].strip().lower() in ('1', 'true', 'yes', 'on')
 
     # Override with CLI arguments if provided
     if args:
@@ -237,6 +244,8 @@ def load_config(args: Optional[argparse.Namespace] = None) -> Config:
             config.verbose = True
         if args.no_verify_ssl:
             config.verify_ssl = False
+        if hasattr(args, 'mockup') and args.mockup:
+            config.mockup_mode = True
 
     return config
 
@@ -295,6 +304,8 @@ Examples:
     # HTTP client options
     parser.add_argument('--no-verify-ssl', action='store_true',
                         help='Disable SSL certificate verification')
+    parser.add_argument('--mockup', action='store_true',
+                        help='Use mockup data from __mockup__ directory instead of real server requests')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Enable verbose output')
     parser.add_argument('-d', '--debug', action='store_true',

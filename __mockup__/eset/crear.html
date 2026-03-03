@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+
+
+
+<html lang="es" class="no-js">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="author" content="SET" />
+<meta name="company" content="SET" />
+<meta name="abstract" content="Marangatu" />
+
+<link rel="apple-touch-icon" sizes="180x180"
+	href="/eset/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png"
+	href="/eset/img/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png"
+	href="/eset/img/favicons/favicon-16x16.png" sizes="16x16" />
+<link rel="manifest"
+	href="/eset/img/favicons/manifest.json">
+<link rel="mask-icon"
+	href="/eset/img/favicons/safari-pinned-tab.svg"
+	color="#84ba49" />
+<meta name="theme-color" content="#343a40" />
+
+<title>Presentar Declaración |
+	MARANGATU</title>
+
+
+
+
+
+
+
+
+<!-- Google Fonts -->
+<script type="text/javascript" src="/eset/ruxitagentjs_ICANVfqru_10327251022105625.js" data-dtconfig="app=2059f1460a86b76b|cuc=yt07k0k6|owasp=1|mel=100000|featureHash=ICANVfqru|dpvc=1|lastModification=1769514607979|tp=500,50,0|rdnt=1|uxrgce=1|srbbv=2|agentUri=/eset/ruxitagentjs_ICANVfqru_10327251022105625.js|reportUrl=/eset/rb_a09b604e-b439-4709-b235-0bd0ad278ec3|rid=RID_1020484221|rpid=-535084371|domain=set.gov.py"></script><link href="/eset/fonts/marangatu-fonts.css"
+	rel="stylesheet">
+
+
+
+
+
+
+
+
+
+		<link rel="stylesheet" href="/eset/css/themes/identidad/bootstrap-custom.css" />
+
+		<link rel="stylesheet" href="/eset/css/libs/font-awesome/css/font-awesome.css" />
+
+		<link rel="stylesheet" href="/eset/css/fw/directive/mgtu-directives.css" />
+
+		<link rel="stylesheet" href="/eset/css/libs/ng-dialog/ngDialog.min.css" />
+
+		<link rel="stylesheet" href="/eset/css/libs/ng-dialog/ngDialog-theme-default.min.css" />
+
+		<link rel="stylesheet" href="/eset/css/libs/animate.css/animate.min.css" />
+
+		<link rel="stylesheet" href="/eset/css/themes/identidad/marangatu.css" />
+
+
+
+
+<!-- styles -->
+
+
+<!-- end styles -->
+
+</head>
+
+
+
+<body class="bg-documentos ambiente-prod">
+
+
+
+
+	<div data-ng-app="bd.declaracion">
+		<div class="wrapper d-flex flex-column">
+			<header>
+
+
+
+
+
+
+<div class="d-print-none">
+
+
+
+
+
+
+	<nav class="navbar navbar-inverse bg-dark">
+
+		<a class="navbar-brand" href="#">
+			<img
+				src="/eset/img/themes/identidad/logo-top-navbar.svg"
+				onerror="/eset/img/themes/identidad/logo-top-navbar.png">
+		</a>
+
+		<ul class="nav justify-content-end d-print-none">
+			<li class="nav-item"><a class="nav-link small text-muted"
+					href="#">
+					<i class="fa fa-clock-o" aria-hidden="true"></i>
+					dom. 01 feb. 2026 00:00
+				</a></li>
+			<li class="nav-item"><a class="nav-link small text-light"
+					title="Imprimir Documento" onclick="window.print()" href="#">
+					<i class="fa fa-print"></i> Imprimir
+				</a></li>
+
+				<li class="nav-item"><a class="nav-link small text-light"
+						title="Cerrar Ventana" onclick="window.close()" href="#">
+						<i class="fa fa-close"></i> Cerrar
+					</a></li>
+
+		</ul>
+	</nav>
+</div>
+
+			</header>
+			<div class="container-fluid">
+				<div data-growl></div>
+				<div class="contenido">
+					<div class="container-fluid">
+
+
+
+
+							<div class="row">
+								<div class="col-12 ml-auto mr-auto bg-light">
+									<div>
+			<div data-ng-controller="CrearDeclaracionController as vm"
+				data-ng-init="vm.inicio('120', '8765432',202601)">
+
+
+					<div data-ng-show="vm.modoCaptura" data-ng-cloak>
+
+
+
+
+<section data-ng-if="vm.datos.resultado.operacion.errores.length === 0">
+
+
+<div class="d-none d-print-block">
+	<div class="panel-header">
+		<h2>SET</h2>
+	</div>
+</div>
+
+<div class="d-none d-print-block">
+	<div class="panel-header">
+		<h2>Certificado de Presentación de Declaración Jurada</h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12 col-md-6">
+
+
+
+		<div class="row">
+			<div class="col-12">
+				<div class="panel-header">
+					<h2>Resultado de la Presentación</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="alert alert-success">Declaración Exitosa</div>
+			</div>
+		</div>
+
+
+		<section>
+			<div class="row">
+				<div class="col-12">
+					<div class="list-group">
+						<div
+							class="list-group-item list-group-item-action flex-column align-items-start">
+							<div class="d-flex w-100 justify-content-between">
+								<small>RUC</small>
+								<h5 class="mb-1">{{vm.datos.resultado.resumen.ruc}}</h5>
+							</div>
+						</div>
+						<div
+							class="list-group-item list-group-item-action flex-column align-items-start">
+							<div class="d-flex w-100 justify-content-between">
+								<small>Formulario</small>
+								<h5 class="mb-1">{{vm.datos.resultado.resumen.formulario}}</h5>
+							</div>
+						</div>
+						<div
+							class="list-group-item list-group-item-action flex-column align-items-start">
+							<div class="d-flex w-100 justify-content-between">
+								<small>Versión</small>
+								<h5 class="mb-1">{{vm.datos.resultado.resumen.version}}</h5>
+							</div>
+						</div>
+						<div
+							class="list-group-item list-group-item-action flex-column align-items-start">
+							<div class="d-flex w-100 justify-content-between">
+								<small>Número de Documento</small>
+								<h5 class="mb-1">{{vm.datos.resultado.resumen.numeroDocumento}}</h5>
+							</div>
+						</div>
+						<div
+							class="list-group-item list-group-item-action flex-column align-items-start">
+							<div class="d-flex w-100 justify-content-between">
+								<small>Período</small>
+								<h5 class="mb-1">{{vm.datos.resultado.resumen.periodo |
+									mgtuPeriodo}}</h5>
+							</div>
+						</div>
+						<div
+							class="list-group-item list-group-item-action flex-column align-items-start">
+							<div class="d-flex w-100 justify-content-between">
+								<small>Declarado el</small>
+								<h5 class="mb-1">{{vm.datos.resultado.resumen.fechaPresentacion
+									| mgtuFecha}}</h5>
+							</div>
+						</div>
+						<div
+							class="list-group-item list-group-item-action flex-column align-items-start">
+							<div class="d-flex w-100 justify-content-between">
+								<small>Recibida por</small>
+								<h5 class="mb-1">{{vm.datos.resultado.resumen.usuario}}</h5>
+							</div>
+						</div>
+						<div
+							class="list-group-item list-group-item-action flex-column align-items-start">
+							<div class="d-flex w-100 justify-content-between">
+								<small>Control</small>
+								<h5 class="mb-1">{{vm.datos.resultado.resumen.hash}}</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<section
+			data-ng-if="vm.datos.resultado.operacion.observaciones.length > 0">
+			<div class="row">
+				<div class="col-12">
+					<div class="panel-header">
+						<h2>Información</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<p>La operación produjo los siguientes mensajes informativos</p>
+				</div>
+			</div>
+
+			<div class="row"
+				data-ng-repeat="observacion in vm.datos.resultado.operacion.observaciones">
+				<div class="col-12">
+					<div class="alert alert-secondary">{{observacion.descripcion}}</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="row d-none d-print-block">
+			<div class="col-12">
+				<div class="panel-header">
+					<h2>Obs: No implica pago.</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 col-md-6 no-print">
+
+		<div class="row">
+			<div class="col-12">
+				<div class="panel-header">
+					<h2>Opciones</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="menu-vertical list-group bg-dark">
+
+
+					<div
+						class="list-group-item list-group-item-action d-flex justify-content-between"
+						data-ng-click="vm.operacionResultado('boleta')"
+						title="{{utilitario.nombre}}">
+						<i class="fa fa-cog"></i> Generar Boleta de Pago
+					</div>
+					<a data-ng-repeat="item in vm.datos.resultado.herramientas"
+						data-ng-if="item.nuevaPagina"
+						class="list-group-item list-group-item-action d-flex justify-content-between"
+						href="{{item.url}}" target="_new" title="{{item.nombre}}">
+						<i class="fa fa-cog"></i> {{item.nombre}}
+					</a>
+					<a data-ng-repeat="item in vm.datos.resultado.herramientas"
+						data-ng-if="!item.nuevaPagina"
+						class="list-group-item list-group-item-action d-flex justify-content-between"
+						href="{{item.url}}" title="{{item.nombre}}">
+						<i class="fa fa-cog"></i> {{item.nombre}}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</section>
+
+
+<section data-ng-if="vm.datos.resultado.operacion.errores.length > 0">
+	<div class="row">
+	<div class="col-12 col-md-8">
+
+
+		<section>
+			<div class="row">
+				<div class="col-12">
+					<div class="panel-header">
+						<h2>Resultado de la Presentación</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="alert alert-danger">Declaración Rechazada</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="panel-header">
+						<h2>Motivos de Rechazo</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<p>No se pudo almacenar el documento en el Sistema, reintente o
+						solicite asistencia. Los siguientes errores fueron encontrados</p>
+				</div>
+			</div>
+
+			<div class="row"
+				data-ng-repeat="error in vm.datos.resultado.operacion.errores">
+				<div class="col-12">
+					<div class="alert alert-warning">{{error.descripcion}}</div>
+				</div>
+			</div>
+		</section>
+
+		<section
+			data-ng-if="vm.datos.resultado.operacion.observaciones.length > 0">
+			<div class="row">
+				<div class="col-12">
+					<div class="panel-header">
+						<h2>Información</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<p>La operación produjo los siguientes mensajes informativos</p>
+				</div>
+			</div>
+
+			<div class="row"
+				data-ng-repeat="observacion in vm.datos.resultado.operacion.observaciones">
+				<div class="col-12">
+					<div class="alert alert-secondary">{{observacion.descripcion}}</div>
+				</div>
+			</div>
+		</section>
+
+	</div>
+	<div class="col-12 col-md-4 mb-3 no-print">
+		<div class="row">
+			<div class="col-12">
+				<div class="panel-header">
+					<h2>Opciones</h2>
+				</div>
+			</div>
+		</div>
+
+		<div class="menu-vertical list-group bg-dark">
+			<div
+				class="list-group-item list-group-item-action d-flex justify-content-between"
+				data-ng-click="vm.operacionResultado('editar')">
+				<i class="fa fa-cog"></i> Editar declaración e intentarlo de nuevo
+			</div>
+			<a data-ng-repeat="item in vm.datos.resultado.herramientas"
+				class="list-group-item list-group-item-action d-flex justify-content-between"
+				href="{{item.url}}" target="_new" title="{{item.nombre}}">
+				<i class="fa fa-cog"></i> {{item.nombre}}
+			</a>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+</section>
+
+
+
+					</div>
+					<div data-ng-show="!vm.modoCaptura">
+						<form id="Formu" name="Formu" enctype="multipart/form-data"
+	autocomplete="off" novalidate="novalidate"
+	onsubmit="return alEnviar(this);">
+
+	<div align="center"><html><textarea id="tasas" rows="1" cols="1" class="islaxml">&lt;?xml version="1.0" encoding="UTF-8"?&gt; &lt;Consulta&gt; &lt;Registro id="FERIADO20260101"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;AÑO NUEVO&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20260301"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DÍA DE LOS HÉROES DE LA PATRIA&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20260402"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;JUEVES SANTO-- SEMANA SANTA&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20260403"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;VIERNES SANTO- SEMANA SANTA&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20260501"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DÍA DE LOS TRABAJADORES&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20260514"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DÍA DE LA INDEPENDENCIA NACIONAL&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20260515"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DÍA DE LA INDEPENDENCIA NACIONAL&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20260612"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DÍA DE LA PAZ DEL CHACO&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20260815"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DÍA DE LA FUNDACIÓN DE ASUNCIÓN&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20260929"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DÍA DE LA BATALLA DE BOQUERÓN&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20261208"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DÍA DE LA VIRGEN DE CAACUPÉ&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FERIADO20261225"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DÍA DE LA NAVIDAD&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="FINPERIODO"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;20260131&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;Fin del periodo&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="HOY"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;20260201&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;Dia de hoy&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="INTERES"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;1.5&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;TASA INTERES VIGENTE&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="MULTA127"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;50000&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;99999999&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;VALOR&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="MULTA21"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;4&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;PORCENTAJE&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="MULTA22"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;6&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;1&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;2&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;PORCENTAJE&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="MULTA23"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;8&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;2&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;3&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;PORCENTAJE&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="MULTA24"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;10&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;3&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;4&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;PORCENTAJE&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="MULTA25"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;12&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;4&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;5&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;PORCENTAJE&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="MULTA26"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;14&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;5&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;99999999&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;PORCENTAJE&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="PLAZO0"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;23&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;DIA&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="TASA76"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;5&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;5.K CREDITO FISCAL VINCULADO A REMUNERACIONES QUE SE AUTOASIGNAN&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="TASAGLOBAL1"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;2899048&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;SALARIO MINIMO&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;Registro id="TIPOCONTRIBUYENTE"&gt; &lt;VALOR1 tipo="BigDecimal" titulo="Version"&gt;12&lt;/VALOR1&gt; &lt;VALOR2 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR2&gt; &lt;VALOR3 tipo="BigDecimal" titulo="Version"&gt;0&lt;/VALOR3&gt; &lt;DESCRIPCION tipo="String" titulo="Version"&gt;FISICO&lt;/DESCRIPCION&gt; &lt;/Registro&gt; &lt;/Consulta&gt;</textarea><link rel="stylesheet" type="text/css" href="/eset/css/bd-celeste-2020.css" /><head><style type="text/css">tbody tr td.sinResaltado:hover { background-color: white; } .filaTabs { margin-top: 10px; } .tab, .tab:hover, table a.tab { text-decoration: none; padding: 5px 10px; background-color: #9999cc; color: white; } .active, .active:hover, table a.active { background-color: #EEEEEE; color: black; @media print { .filaTabs { display: none; } @media print { .tab { display: none; } }</style><script type="text/javascript">function tabs(num) { var tab; tab = document.getElementById('tab1'); tab.style.display = (num==1?'':'none'); tab = document.getElementById('tab2'); tab.style.display = (num==2?'':'none'); tab = document.getElementById('tab3'); tab.style.display = (num==3?'':'none'); var lnktabs = document.getElementsByName("tabsExportador"); for (var i=0; i != lnktabs.length; i++) { var tb = lnktabs[i]; if (tb.id == "lnktab" + num) { tb.className="tab active"; } else { tb.className="tab"; } } return false; } function validarEsExportador() { try { h_exportador.value = "0"; var ruc = document.getElementById('ruc').value; var exportadorValue = contribuyenteEsExportador('8765432', 211, 202601); if(exportadorValue=='S' || exportadorValue=='1'){ document.getElementById('lnktab2').style.display=""; document.getElementById('lnktab3').style.display=""; h_exportador.value = "1"; } }catch(err) { } } function validarEsExportadorCallBack(data) { var h_exportador; var exportadorValue = ""; h_exportador = document.getElementById('exportador'); h_exportador.value = "0"; if(data == true || exportadorValue=='1'){ document.getElementById('lnktab2').style.display=""; document.getElementById('lnktab3').style.display=""; h_exportador.value = "1"; } } if (window.attachEvent) { window.attachEvent("onload", function(event) { tabs(1) }); window.attachEvent("onload", function(event) { contribuyenteEsExportador('8765432', 211, 202601,validarEsExportadorCallBack) }); } else { window.addEventListener("load", function(event) { tabs(1)} , false); window.addEventListener("load", function(event) { contribuyenteEsExportador('8765432', 211, 202601,validarEsExportadorCallBack)} , false); }</script></head><body onload="tabs(1)"><table class="declaracion"><tbody><tr><td><table width="640" class="declaracion1"><tbody><tr><td height="4" align="left" vAlign="bottom"><img width="4" src="/eset/images/top-l-1.gif" height="4" /></td><td class="fondo" /><td align="right" vAlign="bottom"><img width="4" src="/eset/images/top-r-1.gif" height="4" /></td></tr><tr><td width="1" align="left" vAlign="top" class="fondo" /><td width="636" vAlign="top"><table width="640" class="declaracion"><tbody><tr><td style="width: 15%" rowSpan="7" class="borde"><p size="15" align="center"><font size="5"><img border="0" style="margin-top:10px; margin-bottom:10px" align="baseline" src="/eset/images/logo-dnit-ddjj.png" hspace="0" /></font></p><p align="center">IMPUESTO AL VALOR AGREGADO VERSION 4</p><p align="center">V.4 Enero/2020</p><p align="center"><b><font size="6" face="Arial">120</font></b><br /><b /></p></td><td style="font-size: 8px; font-family: verdana" align="center" colSpan="4" class="borde">PARA LLENAR LEA EL INSTRUCTIVO DISPONIBLE EN LA WEB</td><td style="font-size: 8px; font-family: verdana" align="center" colSpan="3" class="borde">LOS IMPORTES SE CONSIGNARÁN SIN CÉNTIMOS</td></tr><tr><td width="50%" colSpan="4" class="borde">Número de Orden<input class="valornumero" id="numeroDocumento" name="dynamicProps(numeroDocumento)" onchange="Calcular(this.form)" readonly="" value="0" /></td><td width="35%" colSpan="1" class="borde">RUC<input class="valornumero" id="ruc" name="dynamicProps(ruc)" onchange="Calcular(this.form)" readonly="" value="8765432" /></td><td width="10%" align="center" colSpan="2" class="borde">DV<input class="valorDV" id="dv" name="dynamicProps(dv)" onchange="Calcular(this.form)" readonly="" value="7" /></td></tr><tr><td colSpan="4" class="borde">Razón Social/Primer Apellido<input class="descripcion" id="primerApellido" name="dynamicProps(primerApellido)" onchange="Calcular(this.form)" readonly="" value="DOE" /></td><td colSpan="3" class="borde">Segundo Apellido<input class="descripcion" id="segundoApellido" name="dynamicProps(segundoApellido)" onchange="Calcular(this.form)" readonly="" value="" /></td></tr><tr><td colSpan="7" class="borde">Nombres<input class="descripcion" id="nombre" name="dynamicProps(nombre)" onchange="Calcular(this.form)" readonly="" value="JOHN" /></td></tr><tr><td class="borde">01</td><td width="1%" class="borde"><input type="checkbox" checked="" id="C1" name="dynamicProps(C1)" onclick="checkRectificativa(this.value)" value="1" /></td><td class="borde">Declaración Jurada Original</td><td align="center" colSpan="4" class="borde">Número de Orden de Declaración se rectifica</td></tr><tr><td class="borde">02</td><td class="borde"><input type="checkbox" id="C2" name="dynamicProps(C2)" disabled="true" value="2" /></td><td class="borde">Declaración Jurada Rectificativa</td><td width="1%" class="borde">03</td><td width="300" align="center" colSpan="3" class="borde"><input class="valornumero" id="C3" name="dynamicProps(C3)" onchange="Calcular(this.form)" onkeypress="return onKeyPressSoloNumeros(event);" readonly="" value="" /></td></tr><tr><td vAlign="top" class="borde">05</td><td vAlign="top" class="borde"><input type="checkbox" id="C5" name="dynamicProps(C5)" onclick="&#xA;                        if (this.checked == true) {this.value =&#xA;                        5&#xA;                        } else {this.value = 0;};Calcular(this.form);&#xA;                     " value="0" /></td><td vAlign="top" class="borde">Declaración Jurada en Carácter de Cese de Actividades, Clausura o Cierre Definitivo</td><td class="borde">04</td><td align="center" colSpan="3" class="borde">Periodo / Ejercicio Fiscal<table style="; width: 180px"><tbody><tr><td style="width: 60px" align="center" colSpan="2" class="borde">Mes</td><td style="width: 120px" align="center" colSpan="4" class="borde">Año</td></tr><tr><td class="borde" align="center">0</td><td class="borde" align="center">1</td><td class="borde" align="center">2</td><td class="borde" align="center">0</td><td class="borde" align="center">2</td><td class="borde" align="center">6</td></tr></tbody></table><input type="hidden" id="C4" name="dynamicProps(C4)" onchange="Calcular(this.form)" onkeypress="return onKeyPressSoloNumeros(event);" value="202601" /></td></tr></tbody></table></td><td width="1" align="right" vAlign="top" class="fondo" /></tr><tr><td height="4" align="left" vAlign="bottom"><img width="4" src="/eset/images/bot-l-1.gif" height="4" /></td><td class="fondo" /><td align="right" vAlign="bottom"><img width="4" src="/eset/images/bot-r-1.gif" height="4" /></td></tr></tbody></table></td></tr><tr><td><table width="640" class="declaracion1"><tbody><tr><td height="4" align="left" vAlign="bottom"><img width="4" src="/eset/images/top-l-1.gif" height="4" /></td><td class="fondo" /><td align="right" vAlign="bottom"><img width="4" src="/eset/images/top-r-1.gif" height="4" /></td></tr><tr><td width="1" align="left" vAlign="top" class="fondo" /><td width="636" vAlign="top"><table class="declaracion"><tbody><tr><th>PARA CONTRIBUYENTES QUE REALICEN OPERACIONES GRAVADAS Y EXONERADAS (INCLUIDAS LAS EXPORTACIONES)</th></tr></tbody></table></td><td width="1" align="right" vAlign="top" class="fondo" /></tr><tr><td height="4" align="left" vAlign="bottom"><img width="4" src="/eset/images/bot-l-1.gif" height="4" /></td><td class="fondo" /><td align="right" vAlign="bottom"><img width="4" src="/eset/images/bot-r-1.gif" height="4" /></td></tr></tbody></table></td></tr><tr><td class="sinResaltado"><div class="filaTabs"><a class="tab active" href="#?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") $('#C190').val(0);} catch(e) {errores++;} return errores; } function ponerTodosLosPuntos(formu) { ponerPuntosEnCampo('C42'); ponerPuntosEnCampo('C44'); ponerPuntosEnCampo('C43'); ponerPuntosEnCampo('C46'); ponerPuntosEnCampo('C45'); ponerPuntosEnCampo('C48'); ponerPuntosEnCampo('C47'); ponerPuntosEnCampo('C49'); ponerPuntosEnCampo('C51'); ponerPuntosEnCampo('C50'); ponerPuntosEnCampo('C53'); ponerPuntosEnCampo('C52'); ponerPuntosEnCampo('C55'); ponerPuntosEnCampo('C54'); ponerPuntosEnCampo('C57'); ponerPuntosEnCampo('C56'); ponerPuntosEnCampo('C59'); ponerPuntosEnCampo('C58'); ponerPuntosEnCampo('C60'); ponerPuntosEnCampo('C62'); ponerPuntosEnCampo('C61'); ponerPuntosEnCampo('C64'); ponerPuntosEnCampo('C63'); ponerPuntosEnCampo('C66'); ponerPuntosEnCampo('C65'); ponerPuntosEnCampo('C149'); ponerPuntosEnCampo('C148'); ponerPuntosEnCampo('C159'); ponerPuntosEnCampo('C158'); ponerPuntosEnCampo('C157'); ponerPuntosEnCampo('C156'); ponerPuntosEnCampo('C155'); ponerPuntosEnCampo('C154'); ponerPuntosEnCampo('C153'); ponerPuntosEnCampo('C152'); ponerPuntosEnCampo('C151'); ponerPuntosEnCampo('C150'); ponerPuntosEnCampo('C209'); ponerPuntosEnCampo('C208'); ponerPuntosEnCampo('C207'); ponerPuntosEnCampo('C206'); ponerPuntosEnCampo('C205'); ponerPuntosEnCampo('C204'); ponerPuntosEnCampo('C203'); ponerPuntosEnCampo('C169'); ponerPuntosEnCampo('C202'); ponerPuntosEnCampo('C201'); ponerPuntosEnCampo('C168'); ponerPuntosEnCampo('C200'); ponerPuntosEnCampo('C167'); ponerPuntosEnCampo('C166'); ponerPuntosEnCampo('C165'); ponerPuntosEnCampo('C164'); ponerPuntosEnCampo('C163'); ponerPuntosEnCampo('C162'); ponerPuntosEnCampo('C161'); ponerPuntosEnCampo('C160'); ponerPuntosEnCampo('C10'); ponerPuntosEnCampo('C12'); ponerPuntosEnCampo('C15'); ponerPuntosEnCampo('C14'); ponerPuntosEnCampo('C17'); ponerPuntosEnCampo('C219'); ponerPuntosEnCampo('C218'); ponerPuntosEnCampo('C217'); ponerPuntosEnCampo('C216'); ponerPuntosEnCampo('C18'); ponerPuntosEnCampo('C215'); ponerPuntosEnCampo('C214'); ponerPuntosEnCampo('C213'); ponerPuntosEnCampo('C179'); ponerPuntosEnCampo('C212'); ponerPuntosEnCampo('C178'); ponerPuntosEnCampo('C211'); ponerPuntosEnCampo('C177'); ponerPuntosEnCampo('C210'); ponerPuntosEnCampo('C176'); ponerPuntosEnCampo('C175'); ponerPuntosEnCampo('C174'); ponerPuntosEnCampo('C173'); ponerPuntosEnCampo('C172'); ponerPuntosEnCampo('C171'); ponerPuntosEnCampo('C170'); ponerPuntosEnCampo('C22'); ponerPuntosEnCampo('C21'); ponerPuntosEnCampo('C24'); ponerPuntosEnCampo('C23'); ponerPuntosEnCampo('C26'); ponerPuntosEnCampo('C27'); ponerPuntosEnCampo('C29'); ponerPuntosEnCampo('C189'); ponerPuntosEnCampo('C188'); ponerPuntosEnCampo('C187'); ponerPuntosEnCampo('C220'); ponerPuntosEnCampo('C186'); ponerPuntosEnCampo('C185'); ponerPuntosEnCampo('C184'); ponerPuntosEnCampo('C183'); ponerPuntosEnCampo('C182'); ponerPuntosEnCampo('C181'); ponerPuntosEnCampo('C180'); ponerPuntosEnCampo('C31'); ponerPuntosEnCampo('C30'); ponerPuntosEnCampo('C33'); ponerPuntosEnCampo('C32'); ponerPuntosEnCampo('C35'); ponerPuntosEnCampo('C34'); ponerPuntosEnCampo('C37'); ponerPuntosEnCampo('C36'); ponerPuntosEnCampo('C39'); ponerPuntosEnCampo('C38'); ponerPuntosEnCampo('C199'); ponerPuntosEnCampo('C198'); ponerPuntosEnCampo('C197'); ponerPuntosEnCampo('C196'); ponerPuntosEnCampo('C195'); ponerPuntosEnCampo('C194'); ponerPuntosEnCampo('C193'); ponerPuntosEnCampo('C192'); ponerPuntosEnCampo('C191'); ponerPuntosEnCampo('C190'); } function quitarTodosLosPuntos(formu) { quitarPuntosDeCampo('C42'); quitarPuntosDeCampo('C44'); quitarPuntosDeCampo('C43'); quitarPuntosDeCampo('C46'); quitarPuntosDeCampo('C45'); quitarPuntosDeCampo('C48'); quitarPuntosDeCampo('C47'); quitarPuntosDeCampo('C49'); quitarPuntosDeCampo('C51'); quitarPuntosDeCampo('C50'); quitarPuntosDeCampo('C53'); quitarPuntosDeCampo('C52'); quitarPuntosDeCampo('C55'); quitarPuntosDeCampo('C54'); quitarPuntosDeCampo('C57'); quitarPuntosDeCampo('C56'); quitarPuntosDeCampo('C59'); quitarPuntosDeCampo('C58'); quitarPuntosDeCampo('C60'); quitarPuntosDeCampo('C62'); quitarPuntosDeCampo('C61'); quitarPuntosDeCampo('C64'); quitarPuntosDeCampo('C63'); quitarPuntosDeCampo('C66'); quitarPuntosDeCampo('C65'); quitarPuntosDeCampo('C149'); quitarPuntosDeCampo('C148'); quitarPuntosDeCampo('C159'); quitarPuntosDeCampo('C158'); quitarPuntosDeCampo('C157'); quitarPuntosDeCampo('C156'); quitarPuntosDeCampo('C155'); quitarPuntosDeCampo('C154'); quitarPuntosDeCampo('C153'); quitarPuntosDeCampo('C152'); quitarPuntosDeCampo('C151'); quitarPuntosDeCampo('C150'); quitarPuntosDeCampo('C209'); quitarPuntosDeCampo('C208'); quitarPuntosDeCampo('C207'); quitarPuntosDeCampo('C206'); quitarPuntosDeCampo('C205'); quitarPuntosDeCampo('C204'); quitarPuntosDeCampo('C203'); quitarPuntosDeCampo('C169'); quitarPuntosDeCampo('C202'); quitarPuntosDeCampo('C201'); quitarPuntosDeCampo('C168'); quitarPuntosDeCampo('C200'); quitarPuntosDeCampo('C167'); quitarPuntosDeCampo('C166'); quitarPuntosDeCampo('C165'); quitarPuntosDeCampo('C164'); quitarPuntosDeCampo('C163'); quitarPuntosDeCampo('C162'); quitarPuntosDeCampo('C161'); quitarPuntosDeCampo('C160'); quitarPuntosDeCampo('C10'); quitarPuntosDeCampo('C12'); quitarPuntosDeCampo('C15'); quitarPuntosDeCampo('C14'); quitarPuntosDeCampo('C17'); quitarPuntosDeCampo('C219'); quitarPuntosDeCampo('C218'); quitarPuntosDeCampo('C217'); quitarPuntosDeCampo('C216'); quitarPuntosDeCampo('C18'); quitarPuntosDeCampo('C215'); quitarPuntosDeCampo('C214'); quitarPuntosDeCampo('C213'); quitarPuntosDeCampo('C179'); quitarPuntosDeCampo('C212'); quitarPuntosDeCampo('C178'); quitarPuntosDeCampo('C211'); quitarPuntosDeCampo('C177'); quitarPuntosDeCampo('C210'); quitarPuntosDeCampo('C176'); quitarPuntosDeCampo('C175'); quitarPuntosDeCampo('C174'); quitarPuntosDeCampo('C173'); quitarPuntosDeCampo('C172'); quitarPuntosDeCampo('C171'); quitarPuntosDeCampo('C170'); quitarPuntosDeCampo('C22'); quitarPuntosDeCampo('C21'); quitarPuntosDeCampo('C24'); quitarPuntosDeCampo('C23'); quitarPuntosDeCampo('C26'); quitarPuntosDeCampo('C27'); quitarPuntosDeCampo('C29'); quitarPuntosDeCampo('C189'); quitarPuntosDeCampo('C188'); quitarPuntosDeCampo('C187'); quitarPuntosDeCampo('C220'); quitarPuntosDeCampo('C186'); quitarPuntosDeCampo('C185'); quitarPuntosDeCampo('C184'); quitarPuntosDeCampo('C183'); quitarPuntosDeCampo('C182'); quitarPuntosDeCampo('C181'); quitarPuntosDeCampo('C180'); quitarPuntosDeCampo('C31'); quitarPuntosDeCampo('C30'); quitarPuntosDeCampo('C33'); quitarPuntosDeCampo('C32'); quitarPuntosDeCampo('C35'); quitarPuntosDeCampo('C34'); quitarPuntosDeCampo('C37'); quitarPuntosDeCampo('C36'); quitarPuntosDeCampo('C39'); quitarPuntosDeCampo('C38'); quitarPuntosDeCampo('C199'); quitarPuntosDeCampo('C198'); quitarPuntosDeCampo('C197'); quitarPuntosDeCampo('C196'); quitarPuntosDeCampo('C195'); quitarPuntosDeCampo('C194'); quitarPuntosDeCampo('C193'); quitarPuntosDeCampo('C192'); quitarPuntosDeCampo('C191'); quitarPuntosDeCampo('C190'); } function Calcular(formu) { var errores=0; try{ errores = Cerar(formu); quitarTodosLosPuntos(formu); errores += Sumar(formu); ponerTodosLosPuntos(formu); } catch(e){ console.log(e); console.trace(); alert('El formulario contiene errores. ');} } </script></html>
+</div>
+
+
+	<input type="hidden" id="formulario" name="dynamicProps(formulario)"
+		value="120" />
+	<input type="hidden" id="periodo" name="dynamicProps(periodo)"
+		value="202601" />
+	<input type="hidden" id="impuesto" name="dynamicProps(impuesto)"
+		value="211" />
+	<input type="hidden" id="impuesto" name="dynamicProps(impuesto)"
+		value="211" />
+	<input type="hidden" id="fechaDiferida" name="dynamicProps(fechaDiferida)"
+		value="" />
+
+	<section>
+		<div data-ng-cloak>
+			<div class="btn-toolbar justify-content-between" role="toolbar"
+				aria-label="Opciones">
+				<div class="btn-group" role="group"
+					aria-label="Opciones Secundarias">
+					<button type="button" name="dynamicProps(opcion)" title="Cancelar"
+						class="btn btn-secondary float-xs-right"
+						data-ng-click="vm.cancelar()">
+						<i class="fa fa-times"></i> Cancelar
+					</button>
+				</div>
+
+				<div class="btn-group" role="group"
+					aria-label="Opciones Secundarias">
+					<button type="button" name="dynamicProps(opcion)" title="Presentar"
+						class="btn-default btn-primary btn" data-ng-click="vm.confirmar()">
+						<i class="fa fa-check"></i> Presentar Declaración
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+</form>
+					</div>
+
+			</div>
+		</div>
+								</div>
+							</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/eset/js/pa/angular/angular-locale_es-es.js"></script>
+<script
+	src="/eset/js/libs/jquery/jquery.min.js?version=2.2.132.6"></script>
+<script
+	src="/eset/js/libs/angular/angular.min.js?version=2.2.132.6"></script>
+<script
+	src="/eset/js/libs/angular/angular-locale_es-py.js?version=2.2.132.6"></script>
+<script
+	src="/eset/js/libs/angular-animate/angular-animate.min.js?version=2.2.132.6"></script>
+
+
+
+
+
+		<script src="/eset/js/libs/popper/popper.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/bootstrap/bootstrap.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/moment/moment.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/moment/es.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/angular-sanitize/angular-sanitize.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/ng-dialog/ngDialog.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/libs/ng-file-upload/ng-file-upload-all.min.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/base.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/fw/service/mgtu-services.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/ru/service/mgtu-registro.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/fw/directive/mgtu-directives.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/fw/controller/topbar.js?version=2.2.132.6"></script>
+
+
+
+
+
+<!-- scripts -->
+
+
+
+		<script src="/eset/js/bd/declaracion/presentacion/xmldom.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/bd/declaracion/presentacion/funciones.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/bd/declaracion/presentacion/extras.js?version=2.2.132.6"></script>
+
+
+		<script src="/eset/js/bd/declaracion/presentacion/crear.js?version=2.2.132.6"></script>
+
+
+
+
+<script type="text/javascript">
+	angular.module('marangatu').constant('mgtuConfig', {
+		baseUrl : '/eset'
+	});
+</script>
+
+
+
+
+</body>
+</html><script id="f5_cspm">(function(){var f5_cspm={f5_p:'IKDDKKJGHDKHPLEFAAHPCMEFAOBLGDEPDOIKHEOHEKCMFHMLGFODILAKODOACGFCNEGBIJMNAAAOFLOAGGIANMMNAADLOJHAODICAHKMKPMDNMPBCLPMFNPHKIFBAFCL',setCharAt:function(str,index,chr){if(index>str.length-1)return str;return str.substr(0,index)+chr+str.substr(index+1);},get_byte:function(str,i){var s=(i/16)|0;i=(i&15);s=s*32;return((str.charCodeAt(i+16+s)-65)<<4)|(str.charCodeAt(i+s)-65);},set_byte:function(str,i,b){var s=(i/16)|0;i=(i&15);s=s*32;str=f5_cspm.setCharAt(str,(i+16+s),String.fromCharCode((b>>4)+65));str=f5_cspm.setCharAt(str,(i+s),String.fromCharCode((b&15)+65));return str;},set_latency:function(str,latency){latency=latency&0xffff;str=f5_cspm.set_byte(str,40,(latency>>8));str=f5_cspm.set_byte(str,41,(latency&0xff));str=f5_cspm.set_byte(str,35,2);return str;},wait_perf_data:function(){try{var wp=window.performance.timing;if(wp.loadEventEnd>0){var res=wp.loadEventEnd-wp.navigationStart;if(res<60001){var cookie_val=f5_cspm.set_latency(f5_cspm.f5_p,res);window.document.cookie='f5avr1479781364aaaaaaaaaaaaaaaa_cspm_='+encodeURIComponent(cookie_val)+';path=/;'+'';}
+return;}}
+catch(err){return;}
+setTimeout(f5_cspm.wait_perf_data,100);return;},go:function(){var chunk=window.document.cookie.split(/\s*;\s*/);for(var i=0;i<chunk.length;++i){var pair=chunk[i].split(/\s*=\s*/);if(pair[0]=='f5_cspm'&&pair[1]=='1234')
+{var d=new Date();d.setTime(d.getTime()-1000);window.document.cookie='f5_cspm=;expires='+d.toUTCString()+';path=/;'+';';setTimeout(f5_cspm.wait_perf_data,100);}}}}
+f5_cspm.go();}());</script>
