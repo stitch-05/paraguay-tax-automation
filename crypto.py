@@ -1,8 +1,8 @@
 """AES-128-CBC encryption for API token generation."""
 
 import base64
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
+from Cryptodome.Cipher import AES
+from Cryptodome.Util.Padding import pad
 
 # Same key and IV as the Bash version
 KEY = bytes.fromhex('707265696d707265736f436f72726563')  # 16 bytes for AES-128
