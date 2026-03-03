@@ -12,16 +12,18 @@ T = TypeVar('T')
 class AnimatedWaitContext:
     """Context manager for animated waiting during operations."""
 
-    def __init__(self, message: str, verbose: bool = True):
+    def __init__(self, message: str, verbose: bool = True, debug: bool = False):
         """
         Initialize animated wait context.
 
         Args:
             message: Message to display with animation
             verbose: Whether to show the animation (message always shows)
+            debug: If True, show wait info but skip enforced random delay
         """
         self.message = message
         self.verbose = verbose
+        self.debug = debug
         self.sleep_time = random.randint(1, 4)  # Random wait time like animated_wait
         self._stop_event = threading.Event()
         self._thread: Optional[threading.Thread] = None
@@ -56,7 +58,7 @@ class AnimatedWaitContext:
         if self._thread and self._start_time:
             # Calculate elapsed time and sleep for the remainder
             elapsed = time.time() - self._start_time
-            remaining = max(0, self.sleep_time - elapsed)
+            remaining = 0 if self.debug else max(0, self.sleep_time - elapsed)
             if remaining > 0:
                 time.sleep(remaining)
 
