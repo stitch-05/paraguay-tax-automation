@@ -23,6 +23,7 @@
 
 ### Documentation
 
+- [`8cfd645d`](https://github.com/stitch-05/paraguay-tax-automation/commit/8cfd645d4444d4920eddb30e9ddcbc89fe51a5e0): Update documentation for handler patterns and AI-assisted development guidelines.
 - [`428573f8`](https://github.com/stitch-05/paraguay-tax-automation/commit/428573f8ff8902055c60eef83726ae5102e36e6a): Update documentation structure and content in copilot instructions for better guidance.
 
 ---
