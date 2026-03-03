@@ -4,6 +4,7 @@
 
 ### Features
 
+- [`51b8f424`](https://github.com/stitch-05/paraguay-tax-automation/commit/51b8f424b2b2d22242776bb855cab9675bc9197f): Add update script to automate pulling latest changes and updating dependencies.
 - [`b3309701`](https://github.com/stitch-05/paraguay-tax-automation/commit/b33097017b5f69f4d79dca0e2c1365599a7d5df8): Add comprehensive test suite for form handlers and improve notification handling.
 - [`d334b3c9`](https://github.com/stitch-05/paraguay-tax-automation/commit/d334b3c9423cbf9d3c30536afb2336981f2814a6): Add mockup mode support for testing and development without server access.
 - [`bce5b792`](https://github.com/stitch-05/paraguay-tax-automation/commit/bce5b792d9658e1b8a0a3009fdf744410492bd8d): Enhance AnimatedWaitContext with failure handling for robust operation tracking.
