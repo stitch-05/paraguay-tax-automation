@@ -4,6 +4,8 @@
 
 ### Features
 
+- [`58c4d6cc`](https://github.com/stitch-05/paraguay-tax-automation/commit/58c4d6cc80031426467b019736da6d0a81ae0302): Add pip fallback support and improve dependency management in installation and update scripts.
+- [`832ce48d`](https://github.com/stitch-05/paraguay-tax-automation/commit/832ce48db070be0b753196c63773621065aad572): Add development-mode install/update support and improve setup documentation.
 - [`51b8f424`](https://github.com/stitch-05/paraguay-tax-automation/commit/51b8f424b2b2d22242776bb855cab9675bc9197f): Add update script to automate pulling latest changes and updating dependencies.
 - [`b3309701`](https://github.com/stitch-05/paraguay-tax-automation/commit/b33097017b5f69f4d79dca0e2c1365599a7d5df8): Add comprehensive test suite for form handlers and improve notification handling.
 - [`d334b3c9`](https://github.com/stitch-05/paraguay-tax-automation/commit/d334b3c9423cbf9d3c30536afb2336981f2814a6): Add mockup mode support for testing and development without server access.
@@ -12,6 +14,7 @@
 
 ### Bug Fixes
 
+- [`4431861f`](https://github.com/stitch-05/paraguay-tax-automation/commit/4431861ff3b39f5ee5111ad7de84bc13c7a3ed58): Remove unnecessary Poetry lock command from the update script to prevent update flow issues.
 - [`42932d3d`](https://github.com/stitch-05/paraguay-tax-automation/commit/42932d3de61cb1bbbc4ccf525a6d143382edad5a): Fix import statements for Cryptodome and update requirements for compatibility.
 - [`d351207e`](https://github.com/stitch-05/paraguay-tax-automation/commit/d351207e4e68e6a431b1e169c2619992825ea793): Change HTTP method from POST to GET for submitting receipt form in Form955Handler.
 - [`e7e9500a`](https://github.com/stitch-05/paraguay-tax-automation/commit/e7e9500ac6d8a6c40c4805414200bf2c332a5dc7): Improve completion message handling in mockup mode for clearer output.
@@ -28,6 +31,7 @@
 
 ### Features
 
+- [`c8376725`](https://github.com/stitch-05/paraguay-tax-automation/commit/c8376725fd8a3ab8a6381b78b07275c873d72cb1): Allow mockup mode to bypass tax-period validation in the main workflow.
 - [`c2938185`](https://github.com/stitch-05/paraguay-tax-automation/commit/c293818574f9a4f612ac6eee112403311c530464): Refactor process method parameters for consistency across form handlers.
 - [`ecb91975`](https://github.com/stitch-05/paraguay-tax-automation/commit/ecb9197513d13702b05bbfb5c3b0120fbd29b91b): Add animated console outputs for improved user experience during automation.
 - [`2d2075ff`](https://github.com/stitch-05/paraguay-tax-automation/commit/2d2075fffecec06e8fb941e11cac350b98754459): Switch to NopeCHA free tier for captcha solving with better cost efficiency.
