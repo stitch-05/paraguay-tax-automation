@@ -145,39 +145,38 @@ This section contains information for developers who want to contribute, test, o
 
 ### Development Installation
 
-To install with development dependencies (includes pytest for running tests):
+To install with development dependencies (for running tests):
 
 ```bash
 ./install.sh --dev
 ```
 
-This installs additional packages from `requirements-dev.txt` (or Poetry dev dependencies) needed for testing and development.
-
-### Updating Development Environment
-
-To update to the latest version with development dependencies:
+### Updating
 
 ```bash
-./update.sh --dev
+./update.sh
 ```
 
-### Switching Between Modes
+The update script automatically detects which environment you're using (Poetry or venv) and whether dev dependencies are installed, keeping everything in sync.
 
-When switching between dev and production installations, use the `--force` flag to recreate the environment:
+### Advanced Options
+
+By default, the scripts use Poetry if it's available on your system. Otherwise, they use pip/venv.
+
+**Force pip/venv instead of Poetry:**
 
 ```bash
-# Switch from dev to production mode
-./install.sh --force
-
-# Switch from production to dev mode
-./install.sh --dev --force
-
-# Same for updates
-./update.sh --force          # switch to production
-./update.sh --dev --force    # switch to dev
+./install.sh --pip          # use pip/venv even if Poetry is available
+./install.sh --pip --dev    # with dev dependencies
+./update.sh --pip           # update using pip/venv
 ```
 
-The `--force` flag removes the existing environment before installing, ensuring a clean state.
+**Clean reinstall:**
+
+```bash
+./install.sh --force        # removes all environments and reinstalls
+./install.sh --force --dev  # clean install with dev dependencies
+```
 
 ### Mockup Mode
 

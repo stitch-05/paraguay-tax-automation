@@ -11,6 +11,7 @@ cd "$SCRIPT_DIR"
 # Parse command line arguments
 INSTALL_DEV=false
 FORCE_RECREATE=false
+FORCE_PIP=false
 for arg in "$@"; do
     case $arg in
         --dev)
@@ -18,6 +19,9 @@ for arg in "$@"; do
             ;;
         --force)
             FORCE_RECREATE=true
+            ;;
+        --pip)
+            FORCE_PIP=true
             ;;
     esac
 done
@@ -44,19 +48,26 @@ if [ ! -f ".env" ]; then
     fi
 fi
 
-# Check if Poetry is available
-if command -v poetry &> /dev/null; then
-    echo "Found Poetry, installing dependencies..."
-    if [ "$FORCE_RECREATE" = true ]; then
-        echo "Removing existing Poetry environment..."
+# Clean up environments if --force is used
+if [ "$FORCE_RECREATE" = true ]; then
+    echo "Cleaning up existing environments..."
+    if command -v poetry &> /dev/null; then
         poetry env remove python 2>/dev/null || true
     fi
+    if [ -d "venv" ]; then
+        rm -rf venv
+    fi
+fi
+
+# Check if Poetry is available (unless --pip flag is used)
+if command -v poetry &> /dev/null && [ "$FORCE_PIP" != "true" ]; then
+    echo "Found Poetry, installing dependencies..."
     if [ "$INSTALL_DEV" = true ]; then
         poetry install
-        echo "(Installed with dev dependencies)"
+        echo "(installed: main + dev dependencies)"
     else
         poetry install --only main
-        echo "(Installed without dev dependencies)"
+        echo "(installed: main dependencies only)"
     fi
     echo ""
     echo "=== Installation complete ==="
@@ -68,13 +79,13 @@ if command -v poetry &> /dev/null; then
     echo "  cd $SCRIPT_DIR && poetry shell"
     echo "  python file_taxes.py"
 else
-    echo "Poetry not found, using pip with virtual environment..."
+    if [ "$FORCE_PIP" = true ]; then
+        echo "Forcing pip with virtual environment (--pip flag set)..."
+    else
+        echo "Poetry not found, using pip with virtual environment..."
+    fi
 
     # Create virtual environment
-    if [ "$FORCE_RECREATE" = true ] && [ -d "venv" ]; then
-        echo "Removing existing virtual environment..."
-        rm -rf venv
-    fi
     if [ ! -d "venv" ]; then
         echo "Creating virtual environment..."
         python3 -m venv venv
@@ -86,9 +97,9 @@ else
     ./venv/bin/pip install -r requirements.txt -q
     if [ "$INSTALL_DEV" = true ]; then
         ./venv/bin/pip install -r requirements-dev.txt -q
-        echo "(Installed with dev dependencies)"
+        echo "(installed: main + dev dependencies)"
     else
-        echo "(Installed without dev dependencies)"
+        echo "(installed: main dependencies only)"
     fi
 
     echo ""
