@@ -20,6 +20,16 @@ The install script will:
 2. Install dependencies
 3. Create `.env` from `.env.example`
 
+## Update
+
+To update to the latest version and refresh dependencies:
+
+```bash
+./update.sh
+```
+
+This will pull the latest changes from git and update your dependencies.
+
 ## Configuration
 
 Edit `.env` and add your Marangatu credentials:
