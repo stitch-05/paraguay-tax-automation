@@ -44,7 +44,8 @@ class PorcentajesHandler(FormHandler):
 
         try:
             recover = json.loads(recover_response)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            self.debug_error_detail('Invalid JSON when recovering percentage data', e, recover_response)
             self.send_message('Error', 'Invalid response when recovering data')
             return False
 
@@ -103,7 +104,8 @@ class PorcentajesHandler(FormHandler):
 
         try:
             save_result = json.loads(save_response)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            self.debug_error_detail('Invalid JSON when saving percentage data', e, save_response)
             self.send_message('Error', 'Invalid response when saving data')
             return False
 

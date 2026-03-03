@@ -52,7 +52,8 @@ class Form955Handler(FormHandler):
 
         try:
             operations = json.loads(operations_response)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            self.debug_error_detail('Invalid JSON when getting receipt operations', e, operations_response)
             self.send_message('Error', 'Invalid response when getting operations')
             return False
 
@@ -83,12 +84,13 @@ class Form955Handler(FormHandler):
             }
             token_talon = self.encrypt_token(talon_data)
 
-        with AnimatedWaitContext('Submitting receipt form', self.config.is_verbose, self.config.is_debug):
+        with AnimatedWaitContext('Submitting receipt form', self.config.is_verbose):
             process_response = self.http.get(f'{self.url_base}/{self.METHOD_TALON}?t3={token_talon}')
 
         try:
             result = json.loads(process_response)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            self.debug_error_detail(f'Invalid JSON when filing receipt form {self.FORM}', e, process_response)
             self.send_message('Error', f'Filing receipt form {self.FORM}')
             return False
 

@@ -79,6 +79,12 @@ class FormHandler(ABC):
         """Send a notification message."""
         notify(self.notifier, title, message, self.config.message_prefix)
 
+    def debug_error_detail(self, context: str, error: Exception, response_text: str) -> None:
+        """Print detailed error context to console only when debug is enabled."""
+        if self.config.is_debug:
+            print(f'DEBUG: {context}: {error}')
+            print(f'DEBUG: response text: {response_text}')
+
     def get_menu_url(self, application_code: str) -> Optional[str]:
         """Get URL for a menu application by its code."""
         for item in self.menu:

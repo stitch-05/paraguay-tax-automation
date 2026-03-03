@@ -45,7 +45,8 @@ class RegistroHandler(FormHandler):
 
         try:
             recover = json.loads(recover_response)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            self.debug_error_detail('Invalid JSON when recovering taxpayer data', e, recover_response)
             self.send_message('Error', 'Invalid response when recovering data')
             return False
 
@@ -167,7 +168,8 @@ class RegistroHandler(FormHandler):
 
         try:
             save_result = json.loads(save_response)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            self.debug_error_detail('Invalid JSON when saving taxpayer data', e, save_response)
             self.send_message('Error', 'Invalid response when saving data')
             return False
 

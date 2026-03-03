@@ -56,7 +56,8 @@ class Form211Handler(FormHandler):
 
             try:
                 permit = json.loads(permit_response)
-            except json.JSONDecodeError:
+            except json.JSONDecodeError as e:
+                self.debug_error_detail('Invalid JSON when checking form permission', e, permit_response)
                 self.send_message('Error', 'Invalid response when checking form permission')
                 return False
 
@@ -117,7 +118,8 @@ class Form211Handler(FormHandler):
 
             try:
                 final = json.loads(final_response)
-            except json.JSONDecodeError:
+            except json.JSONDecodeError as e:
+                self.debug_error_detail('Invalid JSON when filing VAT', e, final_response)
                 self.send_message('Error', 'Invalid response when filing VAT')
                 return False
 
