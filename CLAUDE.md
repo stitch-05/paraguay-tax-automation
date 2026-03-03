@@ -23,7 +23,7 @@ python file_taxes.py --mockup        # test with mock data (no real server)
 # Testing & Pre-Commit
 python -m pytest tests/ -v           # run all tests
 python -m pytest tests/test_form_211.py -v  # run specific test file
-./.git/hooks/pre-commit              # manually test pre-commit hook
+./.githooks/pre-commit               # manually run pre-commit hook
 
 # Installation
 ./install.sh                         # creates venv or uses Poetry
@@ -107,7 +107,7 @@ See `.env.example` for all options.
 
 - **Mockup mode**: `--mockup` redirects HTTP reads to `__mockup__/` directory; see `__mockup__/README.md` for layout
 - **Debug mode**: `--debug` logs request URLs and payload snippets for troubleshooting
-- **Pre-commit hook**: `.git/hooks/pre-commit` runs all tests before each commit; blocks commit if tests fail
+- **Pre-commit hook**: `.githooks/pre-commit` automatically runs all tests before each commit; blocks commit if tests fail (`core.hooksPath` is configured by `install.sh --dev`)
 - **Session issues**: Check `cookies.txt` (Mozilla format) and test with `--mockup -v` to isolate portal vs. parsing problems
 
 ## Limitations

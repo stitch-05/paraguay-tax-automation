@@ -29,6 +29,23 @@ done
 echo "=== Paraguay Tax Automation - Installation ==="
 echo ""
 
+setup_git_hooks() {
+    if ! command -v git &> /dev/null; then
+        return
+    fi
+
+    if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+        return
+    fi
+
+    if [ -f ".githooks/pre-commit" ]; then
+        chmod +x .githooks/pre-commit
+    fi
+
+    git config core.hooksPath .githooks
+    echo "Configured Git hooks path to .githooks"
+}
+
 # Check Python version
 if command -v python3 &> /dev/null; then
     PYTHON_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
@@ -116,4 +133,7 @@ fi
 echo ""
 echo "Configuration:"
 echo "  Edit .env to set your credentials"
+if [ "$INSTALL_DEV" = true ]; then
+    setup_git_hooks
+fi
 echo ""

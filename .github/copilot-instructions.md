@@ -30,7 +30,7 @@
 - Run: `poetry run python file_taxes.py` or `./venv/bin/python file_taxes.py`.
 - Useful flags: `--mockup`, `-v/--verbose`, `-d/--debug`, `-u/-p`, `-nc` (NopeCHA), `-ca` (Capsolver), `--no-verify-ssl`.
 - Tests: `python -m pytest tests/ -v`; target a file with `python -m pytest tests/test_form_211.py -v`.
-- **Pre-commit hook**: `.git/hooks/pre-commit` automatically runs all tests before each commit and blocks if tests fail; run manually with `./.git/hooks/pre-commit`.
+- **Pre-commit hook**: `.githooks/pre-commit` automatically runs all tests before each commit and blocks if tests fail (after `core.hooksPath` setup by `./install.sh --dev`); run manually with `./.githooks/pre-commit`.
 
 ## Mockup and Debugging
 

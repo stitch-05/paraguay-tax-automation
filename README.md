@@ -19,6 +19,7 @@ The install script will:
 1. Create a virtual environment (or use Poetry if available)
 2. Install dependencies
 3. Create `.env` from `.env.example`
+4. Configure Git hooks (`core.hooksPath=.githooks`) when `--dev` is used
 
 ## Update
 
@@ -209,6 +210,35 @@ python -m pytest tests/ -v
 ```
 
 See [`tests/README.md`](tests/README.md) for detailed testing documentation.
+
+### Continuous Integration (CI)
+
+GitHub Actions CI runs automatically on every pull request and on pushes to `main` using Python 3.8 and 3.11.
+
+Workflow file: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
+
+To run the same check locally:
+
+```bash
+python -m pytest tests/ -v
+```
+
+### Pre-commit Hook
+
+This repository tracks Git hooks in [`.githooks/`](.githooks/). The install script configures your local clone automatically:
+
+```bash
+./install.sh --dev
+```
+
+Manual setup (if needed):
+
+```bash
+git config core.hooksPath .githooks
+chmod +x .githooks/pre-commit
+```
+
+After setup, the pre-commit hook automatically runs tests before every `git commit`.
 
 ### Project Structure
 
