@@ -222,7 +222,7 @@ See [`tests/README.md`](tests/README.md) for detailed testing documentation.
 - `tests/` - Test suite
 - `__mockup__/` - Mock data for testing
 
-See [`CLAUDE.md`](CLAUDE.md) for detailed architecture and development guidelines.
+For AI-assisted development, see the prompts and guidelines in [`CLAUDE.md`](CLAUDE.md) (Claude) and [`.github/copilot-instructions.md`](.github/copilot-instructions.md) (GitHub Copilot).
 
 ## License
 

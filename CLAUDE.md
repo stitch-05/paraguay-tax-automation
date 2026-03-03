@@ -48,8 +48,14 @@ python -m pytest tests/test_form_211.py -v  # run specific test file
 Form handlers follow a registry pattern in `forms/__init__.py`:
 
 ```python
-FORM_HANDLERS = {'211': Form211Handler, '955': Form955Handler}
-PROFILE_HANDLERS = {'registro_de_contribuyentes': RegistroHandler, ...}
+FORM_HANDLERS = {
+    '211': Form211Handler,      # VAT form
+    '955': Form955Handler       # Receipt summary
+}
+PROFILE_HANDLERS = {
+    'registro_de_contribuyentes': RegistroHandler,     # Taxpayer registration
+    'porcentajes_actividades': PorcentajesHandler      # Income percentages
+}
 ```
 
 All handlers inherit from `FormHandler` base class in `forms/base.py`.
@@ -61,6 +67,7 @@ All handlers inherit from `FormHandler` base class in `forms/base.py`.
 - `crypto.py` - AES-128-CBC encryption for API tokens (hardcoded key/IV from original Bash impl)
 - `captcha_solver.py` - NopeCHA (free) / Capsolver (paid) for reCAPTCHA v2
 - `notifications.py` - Pushover/Signal/Email notifiers with factory pattern
+- `utils.py` - AnimatedWaitContext and utility functions for operation feedback
 
 ### API Token Encryption
 
@@ -81,7 +88,12 @@ Requests use encrypted `t3` parameter: JSON → AES-128-CBC → base64 → URL e
 4. Handle errors with `debug_error_detail(...)` and notify with `self.send_message(...)`
 5. Register in `forms/__init__.py` FORM_HANDLERS dict with tax code as key
 
-Examples: `forms/form_211.py` (simple encrypted endpoint + HTML parsing) and `forms/registro.py` (multi-step workflow)
+Examples:
+
+- `forms/form_211.py` - Simple encrypted endpoint + HTML form parsing
+- `forms/form_955.py` - Receipt summary with operation type selection
+- `forms/registro.py` - Multi-step taxpayer registration workflow
+- `forms/porcentajes.py` - Multi-step income percentages update workflow
 
 ## Configuration
 
