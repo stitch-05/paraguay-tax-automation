@@ -132,4 +132,7 @@ def send_message(notifier, title: str, message: str, message_prefix: str = '') -
     """Print a local log line and send notification."""
     print(f'{title} - {message}')
     full_message = f'{message_prefix}{message}'
-    notifier.send(title, full_message)
+
+    # Send notification with animated wait
+    with AnimatedWaitContext('Sending notification', verbose=False):
+        notifier.send(title, full_message)
