@@ -1,0 +1,38 @@
+[
+  {
+    "icono": "fa-hand-paper",
+    "id": "1",
+    "nombre": "Registro Manual",
+    "url": "gdi/registroComprobantes.do?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  },
+  {
+    "icono": "fa-exchange",
+    "id": "2",
+    "nombre": "Obtener Comprob. Elect. y Virtuales",
+    "url": "gdi/registroComprobantesVirtuales.do?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  },
+  {
+    "icono": "fa-upload",
+    "id": "3",
+    "nombre": "Importar",
+    "url": "gdi/importacionComprobantes.do?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  },
+  {
+    "icono": "fa-edit",
+    "id": "4",
+    "nombre": "Editar",
+    "url": "gdi/editarComprobantes.do?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  },
+  {
+    "icono": "fa-times-circle",
+    "id": "5",
+    "nombre": "Anular",
+    "url": "gdi/anulacionComprobantes.do?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  },
+  {
+    "icono": "fa-check-square",
+    "id": "6",
+    "nombre": "Confirmar Presentación",
+    "url": "gdi/presentacionTalonResumen.do?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  }
+]

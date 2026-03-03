@@ -1,0 +1,66 @@
+{
+  "exito": true,
+  "operacion": {
+    "id": "ftcr1AuF71Jktm7b7ssqAN46i5M7w57WxFZzhpEYhVazlrHWziDVG3Sh1YlfzsXg",
+    "documento": 1662342027,
+    "documentoTemporal": 1662342027,
+    "documentoRectificativa": null,
+    "observaciones": [],
+    "errores": [],
+    "operacionExitosa": true
+  },
+  "resumen": {
+    "formulario": 120,
+    "version": 4,
+    "regional": null,
+    "impuesto": 211,
+    "periodo": 202601,
+    "ruc": "8765432",
+    "categoria": null,
+    "dv": 7,
+    "fechaPresentacion": "01/02/2026",
+    "fechaCreacion": "01/02/2026 00:00",
+    "fechaDiferida": null,
+    "formaPresentacion": "PAPEL",
+    "modalidad": null,
+    "documento": 1662342027,
+    "documentoRectificativa": null,
+    "numeroDocumento": "12085766590",
+    "numeroDocumentoRectificativa": null,
+    "presentacion": "INTER",
+    "formularioNombre": "IMPUESTO AL VALOR AGREGADO - GRAVADAS Y EXONERADAS - EXPORTADORES",
+    "hash": "8eb10865",
+    "impuestoNombre": null,
+    "nombreContribuyente": "JOHN DOE null",
+    "rectificativa": null,
+    "fechaNacimientoConstitucion": null,
+    "porClausura": false,
+    "pequenoContrib": false,
+    "medianoContrib": false,
+    "grecaptcha": null,
+    "usuario": "8765432",
+    "modoAcceso": null
+  },
+  "urlOriginal": null,
+  "urlNormalizada": null,
+  "herramientas": [
+    {
+      "nombre": "Consultar Declaración Original",
+      "icono": null,
+      "url": "/eset/consultarDDJJCompleta.do?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      "nuevaPagina": true
+    },
+    {
+      "nombre": "Consultar Declaración Normalizada",
+      "icono": null,
+      "url": "/eset/consultarDDJJCompleta.do?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      "nuevaPagina": true
+    },
+    {
+      "nombre": "Ingresar Nueva Declaración",
+      "icono": null,
+      "url": "/eset/recibirDDJJContribuyente.do?_cyp=test1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      "nuevaPagina": false
+    }
+  ]
+}
