@@ -3,7 +3,7 @@
 </p>
 
 <div align="center">
-<h1>File Taxes Paraguay</h1>
+<h1>Paraguay Tax Automation</h1>
 </div>
 
 Automated tax filing system for Paraguay tax residents. Interacts with Paraguay's official tax portal (marangatu.set.gov.py) to file:
