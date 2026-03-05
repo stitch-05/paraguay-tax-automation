@@ -1,4 +1,10 @@
-# File Taxes Paraguay
+<p align="center">
+<img width="25%" height="25%" alt="py-tax" src="https://github.com/user-attachments/assets/23afe28e-c29a-423f-9b5e-a947a47b6e11" />
+</p>
+
+<div align="center">
+<h1>File Taxes Paraguay</h1>
+</div>
 
 Automated tax filing system for Paraguay tax residents. Interacts with Paraguay's official tax portal (marangatu.set.gov.py) to file:
 
